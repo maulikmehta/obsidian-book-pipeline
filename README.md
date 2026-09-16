@@ -1,9 +1,14 @@
-# quarto-book-pipeline
+# obsidian-book-pipeline
 
-Shared Quarto + Typst build for illustrated books: one `build.py` for an
-entire catalog instead of a near-identical copy per title. Renders print PDF
-(with bleed, trim, cover-spread lockup) and preps the Kindle interior, driven
-by a small `book.yml` per book.
+Shared Quarto + Typst build for books drafted in Obsidian: one `build.py` for
+an entire catalog instead of a near-identical copy per title. Renders print
+PDF (with bleed, trim, cover-spread lockup) and preps the Kindle interior,
+driven by a small `book.yml` per book.
+
+Some books lean on Obsidian past plain markdown — character notes and story
+skeleton linked through its graph, not just files that happen to open in it.
+This pipeline picks up downstream of that: it renders whatever scene files
+the vault produces, however they were organized to get there.
 
 Built and used in production by [Swati's Journal](https://swatisjournal.com)
 across a dozen+ children's book titles.
