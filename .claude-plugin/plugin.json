@@ -1,0 +1,9 @@
+{
+  "name": "authorkit",
+  "version": "0.1.0",
+  "description": "Obsidian-native book production: scaffold a vault, audit it, and build print/ebook-ready files from the same source.",
+  "author": {
+    "name": "Swati's Journal",
+    "url": "https://swatisjournal.com"
+  }
+}

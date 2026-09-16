@@ -95,6 +95,20 @@ inflected tail they carry is declared per book under `book.yml`'s
 `authoring.link.scripts`, so a Gujarati-only book and an English-only book
 configure differently without either touching the code.
 
+## As a Claude Code plugin
+
+This repo doubles as the `authorkit` plugin/marketplace
+(`.claude-plugin/`). Installed, it gives four skills over the same code
+above — the onboarding layer the raw CLI doesn't have:
+
+- `authorkit:book-new` — scaffold a vault (title, format, manuscript status, channels)
+- `authorkit:book-build` — render print PDF + Kindle interior
+- `authorkit:book-audit-manuscript` — character/act/chapter consistency
+- `authorkit:book-audit-vault` — vault structure check + visual pacing snapshot
+
+`authorkit` is meant to grow beyond this one pipeline; skill names are
+scoped (`book-*`) so a future tool can add its own without colliding.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "authorkit",
+  "description": "Tools for authors publishing from an Obsidian vault.",
+  "owner": {
+    "name": "Swati's Journal",
+    "url": "https://swatisjournal.com"
+  },
+  "plugins": [
+    {
+      "name": "authorkit",
+      "description": "Obsidian-native book production: scaffold, audit, and build.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
