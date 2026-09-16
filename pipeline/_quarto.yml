@@ -1,0 +1,14 @@
+project:
+  type: default
+  render:
+    - manuscript.qmd
+
+format:
+  typst:
+    toc: false
+    number-sections: false
+    include-in-header:
+      - text: |
+          // Set base text properties
+          #set text(font: "Charter BT", size: 22pt)
+          #set par(justify: true, leading: 0.8em)
