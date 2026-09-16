@@ -99,19 +99,20 @@ def findings(c, has_benchmark=False):
         })
 
     steps = [(abs(r[i]["intensity"]-r[i-1]["intensity"]), i) for i in range(1, len(r))]
-    mx, mi = max(steps)
-    if mi >= 2:
-        prev_low = r[mi-1]["intensity"] <= min(x["intensity"] for x in r) + 2
-        approach = (". Rested immediately before it." if prev_low else ". Nothing lowers the audience before it.")
-    else:
-        prev_low = True
-    out.append({
-        "title": "The sharpest turn",
-        "desc": f"{U.title()} {r[mi-1]['id']} → {r[mi]['id']} moves {r[mi]['intensity']-r[mi-1]['intensity']:+d}"
-                + (f", and the {c['key_label']} changes with it" if r[mi]['key'] != r[mi-1]['key'] else "")
-                + approach,
-        "warn": not prev_low, "leverage": r[mi]["duration"]/tot, "prov": "manuscript", "ids": [r[mi-1]["id"], r[mi]["id"]]
-    })
+    if steps:                          # nothing to compare with a single scene
+        mx, mi = max(steps)
+        if mi >= 2:
+            prev_low = r[mi-1]["intensity"] <= min(x["intensity"] for x in r) + 2
+            approach = (". Rested immediately before it." if prev_low else ". Nothing lowers the audience before it.")
+        else:
+            prev_low = True
+        out.append({
+            "title": "The sharpest turn",
+            "desc": f"{U.title()} {r[mi-1]['id']} → {r[mi]['id']} moves {r[mi]['intensity']-r[mi-1]['intensity']:+d}"
+                    + (f", and the {c['key_label']} changes with it" if r[mi]['key'] != r[mi-1]['key'] else "")
+                    + approach,
+            "warn": not prev_low, "leverage": r[mi]["duration"]/tot, "prov": "manuscript", "ids": [r[mi-1]["id"], r[mi]["id"]]
+        })
 
     pk = max(x["intensity"] for x in r); pks = [x["id"] for x in r if x["intensity"] == pk]
     out.append({

@@ -5,7 +5,7 @@ Compare a manuscript's actual arc against a benchmark: a canonical template
 (Freytag, Rasa Cycle, …) optionally overridden by declared intent in book.yml.
 
     benchmark:
-      template: rasa-cycle       # loads .press/authoring/benchmarks/rasa-cycle.yml
+      template: rasa-cycle       # loads authoring/benchmarks/rasa-cycle.yml
       sthayi: કરુણ               # declared dominant rasa
       peak: 0.75                 # intended climax position (0–1)
       proportions: [0.25, 0.50, 0.25]

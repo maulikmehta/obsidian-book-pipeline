@@ -7,7 +7,7 @@ authoring:
   # Unnamed presences with no character note - crowds, a clerk, extras.
   extras: []
   # Compare this book's arc against a canonical structure. Optional.
-  # Templates live in .press/authoring/benchmarks/ - freytag, rasa-cycle.
+  # Templates live in authoring/benchmarks/ - freytag, rasa-cycle.
   # Every field below is optional; declared values override the template.
   # benchmark:
   #   template: freytag
