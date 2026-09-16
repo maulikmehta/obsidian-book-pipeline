@@ -1,0 +1,21 @@
+title: "UNTITLED"
+authoring:
+  # Frontmatter fields this book uses for the two axes. These also label the
+  # chart, so name them the way you think about them.
+  intensity_field: tension
+  key_field: rasa
+  # Unnamed presences with no character note - crowds, a clerk, extras.
+  extras: []
+  # Compare this book's arc against a canonical structure. Optional.
+  # Templates live in .press/authoring/benchmarks/ - freytag, rasa-cycle.
+  # Every field below is optional; declared values override the template.
+  # benchmark:
+  #   template: freytag
+  #   peak: 0.75                    # intended climax position, 0-1
+  #   proportions: [0.25, 0.5, 0.25]
+  #   sthayi: કરુણ                  # rasa-cycle only: dominant rasa
+  link:
+    # Which scripts to link, and the tail an inflected form may carry.
+    scripts:
+      - range: "A-Za-z"
+        tail: "(?:'s)?"

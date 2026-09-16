@@ -1,0 +1,23 @@
+name: "રસ ચક્ર"
+origin: "Bharata, Nāṭyashāstra (~200 BCE)"
+acts: 3
+
+# The rasa-cycle arc: establishment → rising effort → climactic attainment → resolution in śānti.
+# Subtler than Freytag — the peak is emotional attainment, not dramatic explosion.
+curve:
+  - [0.00, 0.25]   # sthāpanā — establishment of world and sthayi bhava
+  - [0.15, 0.40]   # ārabha — rising, the emotional question is posed
+  - [0.35, 0.55]   # yatna — effort, complications multiply
+  - [0.55, 0.65]   # saṅgharṣa — inner conflict intensifies
+  - [0.75, 1.00]   # prāptya — climactic emotional attainment
+  - [0.90, 0.50]   # nirvahaṇa — unravelling
+  - [1.00, 0.35]   # upasaṃhāra — resolution in śānti (peace)
+
+rules:
+  # Note: peak_range is measured against the midpoint of the climax scene.
+  peak_range: [0.65, 0.85]
+  proportions: [0.25, 0.50, 0.25]
+  sthayi_dominance: 0.25       # sthayi bhava in ≥25% of scenes
+  rasa_variety_min: 3          # at least 3 distinct rasas
+  shanti_ending: true          # final scene should resolve in શાંત
+  descent_required: true

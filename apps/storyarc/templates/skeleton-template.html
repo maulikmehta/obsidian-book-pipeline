@@ -1,0 +1,161 @@
+<meta name="kit-version" content="{{KIT_VERSION}}">
+<title>Skeleton of {{TITLE}}</title>
+<style>
+:root{color-scheme:light;--bg:#ffffff;--panel:#ffffff;--ink:#111827;--ink2:#4b5563;
+ --ink3:#6b7280;--ink4:#9ca3af;--rule:#e5e7eb;--hair:#f9fafb;--fillc:#111827;
+ --s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#4a3aa7;--s8:#e34948;--n1:#4b5563;--n2:#6b7280;--n3:#9ca3af;--ng:#d1d5db}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+ --bg:#111827;--panel:#1f2937;--ink:#f9fafb;--ink2:#9ca3af;--ink3:#6b7280;--ink4:#4b5563;
+ --rule:#374151;--hair:#374151;--fillc:#f9fafb;
+ --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--n1:#d1d5db;--n2:#9ca3af;--n3:#6b7280;--ng:#4b5563}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#111827;--panel:#1f2937;--ink:#f9fafb;
+ --ink2:#9ca3af;--ink3:#6b7280;--ink4:#4b5563;--rule:#374151;--hair:#374151;--fillc:#f9fafb;
+ --s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--n1:#d1d5db;--n2:#9ca3af;--n3:#6b7280;--ng:#4b5563}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:15px/1.55 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Gujarati","Gujarati Sangam MN",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{width:100%;max-width:1460px;margin:0 auto;padding:2rem 1.5rem 5rem}
+.gu,.kt,td:nth-child(4){font-family:"Noto Sans Gujarati","Gujarati Sangam MN","Nirmala UI",
+ "Inter",sans-serif}
+.bf,.sub{font-family:Charter,"Bitstream Charter",Georgia,serif}
+h1{font:600 1.75rem/1.2 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.015em;
+ margin:0 0 7px;text-wrap:balance}
+.sub{color:var(--ink2);font-size:1.05rem;line-height:1.6;margin:0}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin:0 0 11px;font-weight:600}
+.topline{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.stamp{margin:0 0 11px;font-size:.85rem;color:var(--ink3);letter-spacing:.02em;
+ padding:3px 12px;border:1px solid var(--rule);border-radius:999px;white-space:nowrap}
+h2{font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2);
+ margin:46px 0 13px;font-weight:600}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:16px 14px 10px;box-shadow:0 1px 2px rgba(0,0,0,.02)}
+.scroll{overflow-x:auto}
+svg.chart{display:block;min-width:1000px}
+.g{stroke:var(--hair);stroke-width:1}
+.ax{fill:var(--ink3);font-size:10px;text-anchor:end;font-variant-numeric:tabular-nums}
+.st{fill:none;stroke:var(--ink);stroke-width:2.25;stroke-linejoin:miter}
+.fl{fill:var(--fillc);opacity:.035}
+.ri{stroke:var(--ink4);stroke-width:1.25}
+.ri.ks{stroke:var(--ink);stroke-width:2.25}
+.kl{stroke:var(--ink3);stroke-width:1;stroke-dasharray:2 4;opacity:.65}
+.kt{fill:var(--ink2);font-size:11.5px}
+.ac{stroke:var(--ink3);stroke-width:1}
+.gl{fill:var(--ink2);font-size:.75rem;letter-spacing:.07em;text-anchor:middle;font-weight:600}
+.sn{fill:var(--ink3);font-size:10px;text-anchor:middle;font-variant-numeric:tabular-nums}
+.pn{fill:var(--ink2);font-size:12px;text-anchor:end}
+.pw{fill:var(--ink3);font-size:10px;font-variant-numeric:tabular-nums}
+.pg{stroke:var(--rule);stroke-width:1}
+.pb{stroke-width:3;stroke-linecap:round;fill:none;opacity:.9}
+.pb:hover{opacity:1;stroke-width:4}
+.sg{fill:var(--ink3);font-size:9.5px;letter-spacing:.07em;text-anchor:middle;font-weight:600;
+ font-variant-numeric:tabular-nums}
+.tk{stroke:var(--ink4);stroke-width:1}
+.su{fill:none;stroke:var(--ink3);stroke-width:1}
+.sut{fill:var(--ink3);font-size:10px;text-anchor:middle;font-variant-numeric:tabular-nums}
+.hit{fill:transparent;cursor:crosshair}
+.hit:hover{fill:var(--ink);opacity:.03}
+.key{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:14px;font-size:.85rem;color:var(--ink2)}
+.key span{display:flex;align-items:center;gap:7px}
+#tip{position:fixed;pointer-events:none;opacity:0;transform:translate(-50%,-100%);
+ background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:9px 12px;
+ max-width:320px;box-shadow:0 4px 16px rgba(0,0,0,.08);z-index:9;font-size:.85rem;line-height:1.45}
+#tip .tn{font-weight:600} #tip .tt{color:var(--ink3)}
+#tip .tb{font-family:Charter,Georgia,serif;font-size:.95rem;margin-top:5px}
+.grid{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--rule);border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.02);gap:0}
+.note{border-bottom:1px solid var(--rule);font-size:.95rem;line-height:1.55;box-shadow:none;border-radius:0;padding:0;background:transparent}
+.note:last-child{border-bottom:none}
+.note summary{display:flex;align-items:center;padding:14px 20px;cursor:pointer;list-style:none;user-select:none;transition:background-color 0.15s}
+.note summary::-webkit-details-marker{display:none}
+.note summary:hover{background:var(--hair)}
+.note b{color:var(--ink);font-size:.95rem;font-weight:500;margin:0;letter-spacing:0;text-transform:none}
+.note .n-ic{display:flex;align-items:center;justify-content:center;width:20px;height:20px;margin-right:12px;color:var(--ink3)}
+.note.w .n-ic{color:#b45309} /* Warning color */
+.note .n-chv{margin-left:auto;display:flex;align-items:center;color:var(--ink4);transition:transform 0.2s;width:20px;height:20px;justify-content:center}
+.note[open] .n-chv{transform:rotate(180deg)}
+.note .n-bd{padding:0 20px 16px 52px}
+.vitals-group{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.vital{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:16px 20px;box-shadow:0 1px 2px rgba(0,0,0,.02)}
+.vital .v-ttl{display:flex;align-items:center;font-size:.8rem;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:6px}
+.vital .v-brf{font-size:.82rem;margin-bottom:14px;line-height:1.45;min-height:2.9em}
+.vital .v-dot{width:8px;height:8px;border-radius:50%;margin-right:8px;background:var(--ink4)}
+.vital .v-dot.ok{background:#15803d}
+.vital .v-dot.warn{background:#b45309}
+.vital .v-dot.bad{background:#b91c1c}
+.vital .v-val{font-size:1.8rem;font-weight:600;margin-bottom:8px;line-height:1;font-variant-numeric:tabular-nums}
+.vital .v-val.ok{color:#15803d}
+.vital .v-val.warn{color:#b45309}
+.vital .v-val.bad{color:#b91c1c}
+.vital .v-bar{height:6px;background:var(--rule);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.vital .v-fill{height:100%;border-radius:3px}
+.vital .v-fill.ok{background:#22c55e}
+.vital .v-fill.warn{background:#f59e0b}
+.vital .v-fill.bad{background:#ef4444}
+.vital .v-dsc{font-size:.8rem;color:var(--ink3)}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:.95rem}
+col.n{width:1%} col.k{width:1%} col.s{width:1%} col.d{width:auto}
+th{text-align:left;font-size:.85rem;color:var(--ink3);
+ font-weight:500;padding:1.1rem 1.25rem;border-bottom:1px solid var(--rule);white-space:nowrap}
+td{padding:1.1rem 1.25rem;border-bottom:1px solid var(--rule);vertical-align:middle}
+td.m{font-variant-numeric:tabular-nums;white-space:nowrap;
+ font-family:ui-monospace,SFMono-Regular,monospace;font-size:.9rem}
+.bf{font-size:1rem;line-height:1.6}
+tbody tr:hover td{background:var(--hair)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<div class="wrap">
+<div class="topline"><p class="eyebrow">{{MEDIUM}} · {{N}} {{UNIT}}s · {{TOT}} {{DU}} · {{NK}} key changes</p>{{UPDATED}}</div>
+<h1>Skeleton of <span class="gu">{{WORK}}</span></h1>
+<p class="sub">Width is duration, height is {{IL}}. Each {{UNIT}} is a level the reader is
+<em>held</em> at for its length; the vertical risers are the shifts. A bold riser means the
+{{KL}} changed, not just its intensity.</p>
+
+<div class="card" style="margin-top:22px">
+<div class="scroll">
+<svg class="chart" viewBox="0 0 {{W}} {{HT}}" role="img"
+ aria-label="Step chart of {{IL}} against duration across {{N}} {{UNIT}}s">
+<g>{{GRP}}</g><g>{{GRID}}</g>
+<path class="fl" d="{{FILL}}"/><g>{{RIS}}</g><path class="st" d="{{STEP}}"/>
+{{REFCURVE}}
+<g>{{KEYS}}</g><g>{{TICK}}</g><g>{{SUS}}</g><g>{{HITS}}</g>
+</svg>
+</div>
+<div class="key">
+<span><svg width="26" height="10"><line x1="1" y1="5" x2="25" y2="5" stroke="currentColor" stroke-width="2.25"/></svg> {{IL}} held</span>
+<span><svg width="10" height="16"><line x1="5" y1="1" x2="5" y2="15" stroke="currentColor" stroke-width="2.25"/></svg> {{KL}} changes</span>
+<span><svg width="10" height="16"><line x1="5" y1="1" x2="5" y2="15" stroke="currentColor" stroke-width="1.25" opacity=".55"/></svg> intensity only</span>
+<span><svg width="26" height="10"><path d="M1,8 L1,3 L25,3 L25,8" fill="none" stroke="currentColor" stroke-width="1"/></svg> held without a key change</span>
+<span><svg width="26" height="10"><line x1="1" y1="5" x2="25" y2="5" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/></svg> benchmark</span>
+</div>
+</div>
+
+<h2>Reading the traverse</h2>
+{{VITALS}}
+<div class="grid">{{NOTES}}</div>
+
+<h2>Who is on the page</h2>
+<p class="sub" style="font-size:13.5px;margin-bottom:13px">Same axis as above — width is
+words, so a wide bar is a character the reader spends real time with, and a gap under an
+act is someone that act does without. Presence, not speech: a {{UNIT}} counts for
+everyone in it.</p>
+<div class="card scroll">{{PRESENCE}}</div>
+
+<h2>Every {{UNIT}}</h2>
+<div class="card wide scroll"><table>
+<colgroup><col class="n"><col class="n"><col class="n"><col class="k"><col class="n"><col class="s"><col class="s"><col class="d"></colgroup>
+<thead><tr><th>#</th><th>Act</th><th>Ch</th><th>{{KL}}</th><th>{{IL}}</th><th>{{DU}}</th>
+<th>Share</th><th>What happens</th></tr></thead><tbody>{{ROWS}}</tbody></table></div>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script>
+const D={{DATA}},tip=document.getElementById('tip');
+document.querySelectorAll('.hit').forEach(h=>{
+ const show=()=>{const s=D[+h.dataset.i],b=h.getBoundingClientRect();
+  tip.innerHTML=`<div><span class="tn">${s.id}</span> <span class="tt">act ${s.group} · ch ${s.subgroup}</span></div>
+   <div>{{IL}} <b>${s.intensity}</b> · <span class="gu">${s.key}</span></div>
+   <div>${s.duration.toLocaleString()} {{DU}}</div>`+(s.note?`<div class="tb">${s.note}</div>`:``);
+  tip.style.opacity=1;
+  tip.style.left=Math.min(innerWidth-175,Math.max(175,b.left+b.width/2))+'px';
+  tip.style.top=Math.max(160,b.top+130)+'px';};
+ h.addEventListener('mouseenter',show);h.addEventListener('mousemove',show);
+ h.addEventListener('mouseleave',()=>tip.style.opacity=0);});
+</script>

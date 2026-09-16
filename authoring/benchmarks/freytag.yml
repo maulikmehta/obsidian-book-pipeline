@@ -1,0 +1,21 @@
+name: "Freytag's Pyramid"
+origin: "Gustav Freytag, Die Technik des Dramas (1863)"
+acts: 3
+
+# Normalized tension curve: [position_fraction, intensity_fraction]
+# Both axes 0.0–1.0. The kit scales to the book's actual range.
+curve:
+  - [0.00, 0.20]   # opening — low tension, world-building
+  - [0.12, 0.35]   # inciting incident
+  - [0.25, 0.45]   # end of act I — commitment / crossing the threshold
+  - [0.50, 0.60]   # midpoint escalation — stakes double
+  - [0.75, 1.00]   # climax — peak tension
+  - [0.85, 0.50]   # falling action — consequences land
+  - [1.00, 0.30]   # resolution — new equilibrium
+
+rules:
+  # Note: peak_range is measured against the midpoint of the climax scene.
+  peak_range: [0.70, 0.85]
+  proportions: [0.25, 0.50, 0.25]
+  min_turns: 1
+  descent_required: true

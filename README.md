@@ -28,7 +28,9 @@ Each book is a folder with:
 Book Title/
   book.yml          # this book's config (below)
   Story/*.md        # scene files, layout in <!-- typst ... --> comments
-  pipeline/          # this repo, vendored or symlinked in
+  pipeline/         # this repo's pipeline/, vendored or symlinked in
+  authoring/         # this repo's authoring/, ditto
+  apps/              # this repo's apps/, ditto
 ```
 
 Scene files are Markdown with the Typst layout embedded in an HTML comment,
@@ -67,6 +69,31 @@ interior_pages:
 python3 pipeline/build.py                       # build the book in cwd
 python3 pipeline/build.py "Book 8" "Book 9"      # build several
 ```
+
+## authoring/ — the vault-side toolkit
+
+`pipeline/` renders a finished book; `authoring/` is what runs against the
+Obsidian vault while it's still being written. Run from a book's folder (the
+one holding `book.yml` and `Story/`):
+
+```
+python3 authoring/cli.py init                # scaffold a new vault here
+python3 authoring/cli.py skeleton             # render Story/ to a structural
+                                               # visualization (apps/storyarc)
+python3 authoring/cli.py link [--write]       # link each character's first
+                                               # mention in a scene to their note
+python3 authoring/cli.py check                # character notes vs act/chapter
+                                               # agreement across Story/
+python3 authoring/cli.py --selftest           # run the kit's own tests
+```
+
+`skeleton` compares the manuscript's actual pacing against a named structure
+in `authoring/benchmarks/` (Freytag's Pyramid, or a rasa-cycle template for
+non-Western dramatic shape) and renders the result via the `apps/storyarc`
+visualizer. `link` is script-agnostic — which scripts it links and what
+inflected tail they carry is declared per book under `book.yml`'s
+`authoring.link.scripts`, so a Gujarati-only book and an English-only book
+configure differently without either touching the code.
 
 ## License
 
