@@ -10,8 +10,9 @@ skeleton linked through its graph, not just files that happen to open in it.
 This pipeline picks up downstream of that: it renders whatever scene files
 the vault produces, however they were organized to get there.
 
-Built and used in production by [Swati's Journal](https://swatisjournal.com)
-across a dozen+ children's book titles.
+Built and used in production by [Swati's Journal](https://swatisjournal.com):
+7 published titles, 16 live editions across Amazon.com, Amazon.in,
+IngramSpark and Barnes & Noble, on owned ISBNs.
 
 ## Requirements
 

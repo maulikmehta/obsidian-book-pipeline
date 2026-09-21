@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AuthorKit</title>
+<meta name="description" content="Obsidian to print-ready book. A Quarto + Typst pipeline and Claude Code plugin for authors, built and run on a working catalogue.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23111' fill-rule='evenodd' d='M4 4h56v56H4z M14 52C33 50 50 36 52 16V52z'/></svg>">
+<style>
+  :root{
+    --ink:#111111; --paper:#F8F6F1; --stone:#6b6862; --rule:#e0dcd3;
+    --card:#fffefb; --code:#f1eee7;
+    --measure:38rem;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#f2efe8; --paper:#15140f; --stone:#9c968a; --rule:#2c2a24;
+      --card:#1c1a15; --code:#23211b;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#f2efe8; --paper:#15140f; --stone:#9c968a; --rule:#2c2a24;
+    --card:#1c1a15; --code:#23211b;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font:400 17px/1.65 ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--measure); margin:0 auto; padding:0 16px}
+  header{padding:4rem 0 0}
+  .lockup{display:flex; align-items:center; gap:.6rem}
+  .lockup svg{width:26px; height:26px; flex:none; color:var(--ink)}
+  .wordmark{
+    font:700 1.35rem/1 ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif;
+    letter-spacing:-.02em;
+  }
+  .tm{font-size:.55em; vertical-align:super; font-weight:400; letter-spacing:0}
+  h1{
+    font:700 clamp(1.9rem,6vw,2.7rem)/1.15 ui-sans-serif, system-ui, -apple-system, sans-serif;
+    letter-spacing:-.025em; margin:2.6rem 0 0; text-wrap:balance;
+  }
+  .lede{font-size:1.1rem; color:var(--stone); margin:.9rem 0 0; text-wrap:pretty}
+  .proof{
+    margin:2rem 0 0; padding:1rem 1.1rem; background:var(--card);
+    border:1px solid var(--rule); border-radius:10px;
+    font-size:.95rem; line-height:1.6;
+  }
+  .proof b{font-variant-numeric:tabular-nums}
+  h2{
+    font:600 .78rem/1 ui-sans-serif, system-ui, sans-serif; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--stone);
+    margin:3.5rem 0 1.1rem; padding-bottom:.55rem; border-bottom:1px solid var(--rule);
+  }
+  dl{margin:0}
+  dt{
+    font:600 .95rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    margin:1.15rem 0 .15rem;
+  }
+  dt:first-child{margin-top:0}
+  dd{margin:0; color:var(--stone); font-size:.97rem}
+  pre{
+    background:var(--code); border:1px solid var(--rule); border-radius:10px;
+    padding:.9rem 1rem; overflow-x:auto; margin:0;
+    font:400 .88rem/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  pre + p{font-size:.9rem; color:var(--stone); margin:.8rem 0 0}
+  ul{margin:0; padding-left:1.1rem; color:var(--stone); font-size:.97rem}
+  li{margin:.3rem 0}
+  a{color:var(--ink); text-underline-offset:3px; text-decoration-thickness:1px}
+  a:hover{text-decoration-thickness:2px}
+  footer{
+    margin:4.5rem 0 0; padding:1.6rem 0 4rem; border-top:1px solid var(--rule);
+    font-size:.88rem; color:var(--stone);
+  }
+  footer p{margin:.35rem 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="lockup">
+      <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M4 4h56v56H4z M14 52C33 50 50 36 52 16V52z"/>
+      </svg>
+      <span class="wordmark">AuthorKit<span class="tm">&trade;</span></span>
+    </div>
+
+    <h1>Your Obsidian vault, print-ready.</h1>
+    <p class="lede">
+      A Quarto&nbsp;+&nbsp;Typst build pipeline and Claude Code plugin that takes a book
+      from scene files to a press PDF and a Kindle interior &mdash; driven by one small
+      <code>book.yml</code> per title, not a near-identical build script per title.
+    </p>
+
+    <div class="proof">
+      Built and run by <a href="https://swatisjournal.com">Swati Joshi</a> &mdash;
+      <b>7</b> titles, <b>16</b> live editions across Amazon.com, Amazon.in,
+      IngramSpark and Barnes&nbsp;&amp;&nbsp;Noble, all on owned ISBNs.
+      This is the pipeline behind them.
+    </div>
+  </header>
+
+  <main>
+    <h2>What you get</h2>
+    <dl>
+      <dt>/book-new</dt>
+      <dd>Scaffolds a book vault &mdash; asks for title, format, manuscript status and target channels, then writes the structure.</dd>
+
+      <dt>/book-audit-vault</dt>
+      <dd>Checks the vault is sound: <code>book.yml</code> valid, <code>Story/Index.md</code> and <code>Characters/</code> present, fonts available for the build.</dd>
+
+      <dt>/book-audit-manuscript</dt>
+      <dd>Checks the manuscript itself &mdash; characters referenced but missing a note, act and chapter drift, first mentions that should be linked.</dd>
+
+      <dt>/book-build</dt>
+      <dd>Renders the print PDF with bleed, trim and cover-spread lockup, and preps the Kindle interior from the same source.</dd>
+    </dl>
+
+    <h2>Install</h2>
+    <pre><code>/plugin marketplace add maulikmehta/authorkit
+/plugin install authorkit</code></pre>
+    <p>Free, MIT licensed. Source on <a href="https://github.com/maulikmehta/authorkit">GitHub</a>.</p>
+
+    <h2>Requirements</h2>
+    <ul>
+      <li><a href="https://quarto.org">Quarto</a> &mdash; renders <code>.qmd</code> to Typst to PDF</li>
+      <li>Python 3</li>
+      <li>ImageMagick, for cover cropping</li>
+      <li>Your own licensed fonts, dropped into <code>pipeline/fonts/</code></li>
+    </ul>
+
+    <!-- Publishing services arm goes here when there is an actual offering:
+         intake, pricing, contract. Do not claim a press that cannot yet
+         accept a manuscript. -->
+  </main>
+
+  <footer>
+    <p>AuthorKit&trade; is owned and operated by Swati Joshi.</p>
+    <p>Her catalogue: <a href="https://swatisjournal.com">swatisjournal.com</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
