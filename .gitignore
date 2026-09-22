@@ -3,3 +3,29 @@ __pycache__/
 .DS_Store
 pipeline/fonts/*.otf
 pipeline/fonts/*.ttf
+
+# Book artifacts. This repo gets vendored or symlinked into a book vault,
+# so a stray `git add -A` from the wrong directory must not be able to
+# commit a manuscript, a cover or a press-ready file.
+*.pdf
+*.epub
+*.mobi
+*.azw3
+*.indd
+*.psd
+*.ai
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+/Deliver/
+/Publishing/
+/Production/
+/Story/
+/Strategy/
+/images/
+/book.yml
+_book/
+.quarto/
+*.qmd

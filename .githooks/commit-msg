@@ -1,0 +1,56 @@
+#!/bin/sh
+# Commit message schema. Installed via: git config core.hooksPath .githooks
+#
+# Types are the ones this project actually earned, counted across history --
+# not a vocabulary invented for the occasion. Retired one-offs (projections,
+# cover, bookplate, research, rename, "books 1-5", update_proj) map onto
+# feat/fix/docs with a scope instead.
+
+msg_file="$1"
+subject=$(sed -n '1p' "$msg_file")
+
+# Merges, reverts and fixups are git's own wording. Leave them alone.
+case "$subject" in
+  "Merge "*|"Revert "*|"fixup!"*|"squash!"*) exit 0 ;;
+esac
+
+TYPES='feat|fix|docs|style|refactor|perf|test|chore|build|revert|content|seo|assets|status'
+
+fail() {
+  echo "commit-msg: $1" >&2
+  echo >&2
+  echo "  Schema:  type(scope): subject" >&2
+  echo "  Types:   feat fix docs style refactor perf test chore build revert" >&2
+  echo "           content seo assets status" >&2
+  echo "  Subject: lowercase, imperative, no trailing period, <= 80 chars" >&2
+  echo "  Body:    wrap at 72, say WHY. Long rationale belongs in a doc." >&2
+  echo "  One logical change per commit -- never two types in one subject." >&2
+  echo >&2
+  echo "  Yours:   $subject" >&2
+  exit 1
+}
+
+echo "$subject" | grep -qE "^($TYPES)(\([a-z0-9._-]+\))?!?: .+" \
+  || fail "subject does not match the schema"
+
+[ ${#subject} -le 80 ] || fail "subject is ${#subject} chars, limit is 80"
+
+case "$subject" in
+  *.) fail "subject ends with a period" ;;
+esac
+
+# Two types in one subject means two commits.
+echo "$subject" | sed -E 's/^([a-z]+)(\([^)]*\))?!?: //' \
+  | grep -qE "(^|; )($TYPES)(\([a-z0-9._-]+\))?: " \
+  && fail "two changes in one subject -- split into separate commits"
+
+# Body lines: wrap at 72. Ignore trailers and anything unwrappable (URLs, code).
+# NOTE: no pipeline here. `cmd | while read` runs the loop in a subshell,
+# so its exit never reaches git and the hook silently passes.
+long=$(awk 'NR>2 && length($0)>72 && $0 !~ /^[A-Za-z-]+: / && $0 !~ /https?:\/\// {
+  print NR ": " $0; exit }' "$msg_file")
+
+[ -z "$long" ] || fail "body line exceeds 72 columns -- rewrap
+  $long"
+
+exit 0
