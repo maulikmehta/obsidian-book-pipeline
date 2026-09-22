@@ -138,13 +138,24 @@
   .masthead__nav a {
     color: var(--stone);
     text-decoration: none;
+    /* Icon-only: flex removes the inline-image baseline gap, and the padding
+       keeps the tap target near 44px without enlarging the mark. */
+    display: flex;
+    align-items: center;
+    padding: .35rem;
+    margin: -.35rem;
+    border-radius: 4px;
   }
-  .masthead__nav a:hover { color: var(--black); text-decoration: underline; }
+  .masthead__nav a:focus-visible {
+    outline: 2px solid var(--black);
+    outline-offset: 2px;
+  }
+  .masthead__nav a:hover { color: var(--black); }
 
   /* ── Hero ────────────────────────────────────────────────── */
   .hero {
-    padding-top: clamp(3rem, 7vw, 5.5rem);
-    padding-bottom: 1.75rem;
+    padding-top: clamp(2.2rem, 5vw, 3.6rem);
+    padding-bottom: 1.1rem;
   }
 
   .hero__eyebrow {
@@ -184,17 +195,17 @@
   /* Proof block — the evidence */
   .proof {
     border: 1px solid var(--rule);
-    padding: 1rem 1.2rem;
+    padding: .9rem 1.1rem;
     font-size: 1rem;
     line-height: 1.6;
-    margin-top: 2.5rem;
+    margin-top: 1.75rem;
     margin-bottom: 0;
   }
 
   .proof b { font-variant-numeric: tabular-nums; }
 
   /* Wrap bottom — breathe before footer border */
-  main > .wrap { padding-bottom: 3rem; }
+  main > .wrap { padding-bottom: 2rem; }
 
 
   .section-head {
@@ -205,9 +216,9 @@
     text-transform: uppercase;
     color: var(--stone);
     border-bottom: 1px solid var(--rule);
-    padding-bottom: .5rem;
-    margin-top: 2.5rem;
-    margin-bottom: 1.1rem;
+    padding-bottom: .45rem;
+    margin-top: 1.9rem;
+    margin-bottom: .9rem;
   }
 
   /* ── Skills ──────────────────────────────────────────────── */
@@ -219,7 +230,7 @@
     font-weight: 600;
     font-variant-ligatures: none;
     color: var(--black);
-    margin: 1.15rem 0 .15rem;
+    margin: .95rem 0 .15rem;
     letter-spacing: .01em;
   }
   dt:first-child { margin-top: 0; }
@@ -277,8 +288,8 @@
   .services {
     border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
-    padding: 2rem 0;
-    margin-top: 3rem;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
   }
 
   .services__label {
@@ -306,7 +317,7 @@
     font-size: .9375rem;
     color: var(--stone);
     max-width: 48ch;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
     line-height: 1.7;
   }
 
@@ -331,7 +342,7 @@
   .colophon {
     margin-top: auto;
     border-top: 1px solid var(--rule);
-    padding: 1.5rem 0 3rem;
+    padding: 1.25rem 0 2rem;
     font-size: .875rem;
     color: var(--stone);
   }
@@ -374,7 +385,7 @@
   /* ── Titles band ─────────────────────────────────────────── */
   .titles-band {
     border-top: 1px solid var(--rule);
-    padding: 2.5rem 0 3rem;
+    padding: 1.75rem 0 2rem;
   }
 
   .titles-list {
@@ -437,7 +448,13 @@
     </a>
 
     <nav class="masthead__nav" aria-label="Site navigation">
-      <a href="https://github.com/maulikmehta/obsidian-book-pipeline" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/maulikmehta/obsidian-book-pipeline"
+         target="_blank" rel="noopener" aria-label="View the source on GitHub">
+        <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"
+             aria-hidden="true" focusable="false">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+      </a>
     </nav>
 
   </div>
