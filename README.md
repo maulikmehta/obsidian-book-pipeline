@@ -55,14 +55,35 @@ targets: ["interior"]        # also available: "manuscript", "cover"
 cover_prefixes: ["01-Cover"] # scene-file prefixes treated as the cover
 interior_excludes: ["17-Back-Cover"]  # scenes left out of the interior
 single_pages: true            # split spreads into single trim pages
+
+# Both blocks below are OPTIONAL. Omit them and the book still builds -
+# you just get no generated cover lockup and no generated front matter.
+# If you DO use one, `module:` is required: it points at your own Python
+# file, relative to the book folder. There is no built-in design module.
 cover_lockup:
+  module: ../design/cover.py   # required if cover_lockup is present
   isbn: "978-..."
   label: true
-  volume: 3
+  volume: 3                    # required for the "kindle" target
 interior_pages:
+  module: ../design/front.py   # required if interior_pages is present
   imprint:
     isbn: "978-..."
 ```
+
+### Writing a design module
+
+`cover_lockup.module` must define:
+
+```python
+def lockup_svg(vol, label=True, isbn=None) -> str       # SVG source
+def write_lockup_pdf(vol, path, label=True, isbn=None)  # writes the PDF
+def render_png(svg, path)                               # SVG -> PNG
+def clean_isbn(isbn) -> str | None                      # digits, or None
+```
+
+`interior_pages.module` must define `render(name, vol, cfg) -> str`, returning
+Typst for each scene file named under `interior_pages.spreads`.
 
 ## Usage
 

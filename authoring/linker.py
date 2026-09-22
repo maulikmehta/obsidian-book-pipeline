@@ -7,7 +7,7 @@ every occurrence would rewrite finished prose to buy nothing.
 
 Script-agnostic. A form is linkable if it falls in one of the ranges named in
 book.yml, and each range carries the tail its script can pick up - Gujarati
-case suffixes, an English possessive. Call me Sardar configures Gujarati only,
+case suffixes, an English possessive. a Gujarati-only book configures Gujarati only,
 so its Latin canonical names stay unlinked exactly as before.
 """
 import os

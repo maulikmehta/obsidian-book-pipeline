@@ -1,7 +1,7 @@
 """Per-book settings, read from book.yml in the current directory.
 
 Root is cwd, never __file__ — the kit is shared code run against whichever
-book you are standing in, exactly like .press/pipeline/build.py.
+book you are standing in, exactly like pipeline/build.py.
 """
 import copy
 import os

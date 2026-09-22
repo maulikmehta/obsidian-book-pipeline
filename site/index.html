@@ -3,145 +3,519 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AuthorKit</title>
-<meta name="description" content="Obsidian to print-ready book. A Quarto + Typst pipeline and Claude Code plugin for authors, built and run on a working catalogue.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='%23111' fill-rule='evenodd' d='M4 4h56v56H4z M14 52C33 50 50 36 52 16V52z'/></svg>">
+<title>AuthorKit — Publishing Pipeline for Authors</title>
+<meta name="description" content="Obsidian to print-ready book. A Quarto + Typst pipeline and Claude Code plugin for authors. Built and run on 6 published titles across Amazon, IngramSpark and Barnes & Noble.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+<!-- Inline colophon favicon — the house mark -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='163.81 159.67 607.19 703.21'><path fill='%23111' d='M745.91,159.67H219.81a56.16,56.16,0,0,0-56,56V806.88a56.16,56.16,0,0,0,56,56H771V159.67ZM709,789.15H265.14C510.75,789.15,709,586.93,709,341.32Z'/></svg>">
+
 <style>
-  :root{
-    --ink:#111111; --paper:#F8F6F1; --stone:#6b6862; --rule:#e0dcd3;
-    --card:#fffefb; --code:#f1eee7;
-    --measure:38rem;
+  /* ── Tokens ─────────────────────────────────────────────── */
+  :root {
+    --black:   #000000;
+    --white:   #ffffff;
+    --stone:   #4a4845;
+    --rule:    #000000;
+    --rule-lt: rgba(0,0,0,.12);
+    --paper:   #F8F6F1;   /* warm off-white — AuthorKit's ground */
+    --code-bg: #EFEDE8;
+
+    --font-head: 'Playfair Display', Georgia, serif;
+    --font-body: 'Source Serif 4', Georgia, serif;
+
+    --measure: 38rem;
+    --pad: clamp(1rem, 4vw, 2rem);
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --ink:#f2efe8; --paper:#15140f; --stone:#9c968a; --rule:#2c2a24;
-      --card:#1c1a15; --code:#23211b;
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --black:   #f0ece4;
+      --white:   #13120d;
+      --stone:   #9c968a;
+      --rule:    rgba(240,236,228,.25);
+      --rule-lt: rgba(240,236,228,.10);
+      --paper:   #13120d;
+      --code-bg: #1c1a14;
     }
   }
-  :root[data-theme="dark"]{
-    --ink:#f2efe8; --paper:#15140f; --stone:#9c968a; --rule:#2c2a24;
-    --card:#1c1a15; --code:#23211b;
+
+  /* ── Reset ──────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    background: var(--paper);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-size: 20px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
   }
-  *{box-sizing:border-box}
-  body{
-    margin:0; background:var(--paper); color:var(--ink);
-    font:400 17px/1.65 ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
-    -webkit-font-smoothing:antialiased;
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
   }
-  .wrap{max-width:var(--measure); margin:0 auto; padding:0 16px}
-  header{padding:4rem 0 0}
-  .lockup{display:flex; align-items:center; gap:.6rem}
-  .lockup svg{width:26px; height:26px; flex:none; color:var(--ink)}
-  .wordmark{
-    font:700 1.35rem/1 ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif;
-    letter-spacing:-.02em;
+
+  a {
+    color: var(--black);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
   }
-  .tm{font-size:.55em; vertical-align:super; font-weight:400; letter-spacing:0}
-  h1{
-    font:700 clamp(1.9rem,6vw,2.7rem)/1.15 ui-sans-serif, system-ui, -apple-system, sans-serif;
-    letter-spacing:-.025em; margin:2.6rem 0 0; text-wrap:balance;
+  a:hover { text-decoration-thickness: 2px; }
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  .wrap {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
   }
-  .lede{font-size:1.1rem; color:var(--stone); margin:.9rem 0 0; text-wrap:pretty}
-  .proof{
-    margin:2rem 0 0; padding:1rem 1.1rem; background:var(--card);
-    border:1px solid var(--rule); border-radius:10px;
-    font-size:.95rem; line-height:1.6;
+
+  /* ── Masthead ────────────────────────────────────────────── */
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 20;
   }
-  .proof b{font-variant-numeric:tabular-nums}
-  h2{
-    font:600 .78rem/1 ui-sans-serif, system-ui, sans-serif; letter-spacing:.09em;
-    text-transform:uppercase; color:var(--stone);
-    margin:3.5rem 0 1.1rem; padding-bottom:.55rem; border-bottom:1px solid var(--rule);
+
+  .masthead__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4.2rem;
   }
-  dl{margin:0}
-  dt{
-    font:600 .95rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
-    margin:1.15rem 0 .15rem;
+
+  .masthead__brand {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    text-decoration: none;
+    color: var(--black);
   }
-  dt:first-child{margin-top:0}
-  dd{margin:0; color:var(--stone); font-size:.97rem}
-  pre{
-    background:var(--code); border:1px solid var(--rule); border-radius:10px;
-    padding:.9rem 1rem; overflow-x:auto; margin:0;
-    font:400 .88rem/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* The house colophon mark — portrait book, left rounded = spine */
+  .masthead__mark {
+    width: 30px;
+    height: 35px;
+    flex-shrink: 0;
+    fill: var(--black);
   }
-  pre + p{font-size:.9rem; color:var(--stone); margin:.8rem 0 0}
-  ul{margin:0; padding-left:1.1rem; color:var(--stone); font-size:.97rem}
-  li{margin:.3rem 0}
-  a{color:var(--ink); text-underline-offset:3px; text-decoration-thickness:1px}
-  a:hover{text-decoration-thickness:2px}
-  footer{
-    margin:4.5rem 0 0; padding:1.6rem 0 4rem; border-top:1px solid var(--rule);
-    font-size:.88rem; color:var(--stone);
+
+  .masthead__name {
+    font-family: var(--font-head);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    line-height: 1;
   }
-  footer p{margin:.35rem 0}
+
+  .masthead__tm {
+    font-size: .5em;
+    vertical-align: super;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .masthead__nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-family: var(--font-body);
+    font-size: .95rem;
+  }
+
+  .masthead__nav a {
+    color: var(--stone);
+    text-decoration: none;
+  }
+  .masthead__nav a:hover { color: var(--black); text-decoration: underline; }
+
+  /* ── Hero ────────────────────────────────────────────────── */
+  .hero {
+    padding-top: clamp(3rem, 7vw, 5.5rem);
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--rule-lt);
+  }
+
+  .hero__eyebrow {
+    font-family: var(--font-body);
+    font-size: .8rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 1rem;
+  }
+
+  .hero__headline {
+    font-family: var(--font-head);
+    font-size: clamp(2.1rem, 6vw, 3rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -.025em;
+    color: var(--black);
+    margin-bottom: 1rem;
+    text-wrap: balance;
+  }
+
+  .hero__headline em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .hero__lede {
+    font-size: 1.15rem;
+    color: var(--stone);
+    margin-bottom: 1.75rem;
+    max-width: 52ch;
+    text-wrap: pretty;
+  }
+
+  /* Proof block — the evidence */
+  .proof {
+    border: 1px solid var(--rule);
+    padding: 1rem 1.2rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-top: 2.5rem;
+    margin-bottom: 0;
+  }
+
+  .proof b { font-variant-numeric: tabular-nums; }
+
+  /* Wrap bottom — breathe before footer border */
+  main > .wrap { padding-bottom: 3rem; }
+
+
+  .section-head {
+    font-family: var(--font-body);
+    font-size: .76rem;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--stone);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: .5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.1rem;
+  }
+
+  /* ── Skills ──────────────────────────────────────────────── */
+  dl { margin: 0; }
+
+  dt {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    font-variant-ligatures: none;
+    color: var(--black);
+    margin: 1.15rem 0 .15rem;
+    letter-spacing: .01em;
+  }
+  dt:first-child { margin-top: 0; }
+
+  dd {
+    margin: 0;
+    color: var(--stone);
+    font-size: 1rem;
+  }
+
+  /* ── Code ────────────────────────────────────────────────── */
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .85em;
+    background: var(--code-bg);
+    padding: .1em .3em;
+  }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    padding: .85rem 1rem;
+    overflow-x: auto;
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .88rem;
+    line-height: 1.7;
+  }
+
+  pre + p {
+    font-size: .95rem;
+    color: var(--stone);
+    margin-top: .75rem;
+  }
+
+  .disclaimer {
+    margin-top: .75rem;
+    font-size: .8rem;
+    color: var(--stone);
+    border-left: 2px solid var(--rule-lt);
+    padding-left: .75rem;
+    font-style: italic;
+  }
+
+  /* ── Lists ───────────────────────────────────────────────── */
+  ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--stone);
+    font-size: 1rem;
+  }
+  li { margin: .3rem 0; }
+
+  /* ── Services band ───────────────────────────────────────── */
+  .services {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 2rem 0;
+    margin-top: 3rem;
+  }
+
+  .services__label {
+    font-family: var(--font-body);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: .75rem;
+  }
+
+  .services__headline {
+    font-family: var(--font-head);
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -.015em;
+    color: var(--black);
+    margin-bottom: .75rem;
+    text-wrap: balance;
+  }
+
+  .services__body {
+    font-size: .9375rem;
+    color: var(--stone);
+    max-width: 48ch;
+    margin-bottom: 1.25rem;
+    line-height: 1.7;
+  }
+
+  .services__cta {
+    display: inline-block;
+    border: 1px solid var(--rule);
+    padding: .6rem 1.2rem;
+    font-size: .875rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+    background: transparent;
+  }
+  .services__cta:hover {
+    background: var(--black);
+    color: var(--paper);
+    text-decoration: none;
+  }
+
+  /* ── Footer ──────────────────────────────────────────────── */
+  .colophon {
+    margin-top: auto;
+    border-top: 1px solid var(--rule);
+    padding: 1.5rem 0 3rem;
+    font-size: .875rem;
+    color: var(--stone);
+  }
+
+  .colophon__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .75rem;
+  }
+
+  .colophon__brand {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+  }
+
+  .colophon__mark {
+    width: 13px;
+    height: 15px;
+    fill: var(--stone);
+    flex-shrink: 0;
+  }
+
+  .colophon p { margin: .25rem 0; }
+
+  .colophon a {
+    color: var(--stone);
+    text-underline-offset: 2px;
+  }
+  .colophon a:hover { color: var(--black); }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .masthead__nav { display: none; }
+    .colophon__inner { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ── Titles band ─────────────────────────────────────────── */
+  .titles-band {
+    border-top: 1px solid var(--rule);
+    padding: 2.5rem 0 3rem;
+  }
+
+  .titles-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .titles-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: .45rem 0;
+    border-bottom: 1px solid var(--rule-lt);
+    margin: 0;
+    font-size: 1rem;
+    color: var(--black);
+  }
+
+  .titles-list li:first-child { border-top: 1px solid var(--rule-lt); }
+
+  .titles-list__name {
+    flex: 0 0 auto;
+    font-weight: 600;
+    min-width: 0;
+  }
+
+  .titles-list__meta {
+    color: var(--stone);
+    font-size: .875rem;
+    min-width: 0;
+  }
+
+  .titles-list__note {
+    margin-top: 1.25rem;
+    font-size: .875rem;
+    color: var(--stone);
+  }
+
+  .titles-list__note a { color: var(--stone); }
+  .titles-list__note a:hover { color: var(--black); }
+
+  @media (max-width: 480px) {
+    .titles-list li { flex-direction: column; gap: .1rem; }
+  }
 </style>
 </head>
 <body>
+
+<!-- ═══ Masthead ══════════════════════════════════════════════ -->
+<header class="masthead">
+  <div class="wrap masthead__inner">
+
+    <a class="masthead__brand" href="/" aria-label="AuthorKit home">
+      <!-- House colophon: portrait book, left corners rounded (spine), right square (fore-edge) -->
+      <svg class="masthead__mark" viewBox="163.81 159.67 607.19 703.21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M745.91,159.67H219.81a56.16,56.16,0,0,0-56,56V806.88a56.16,56.16,0,0,0,56,56H771V159.67ZM709,789.15H265.14C510.75,789.15,709,586.93,709,341.32Z"/>
+      </svg>
+      <span class="masthead__name">AuthorKit<span class="masthead__tm">&trade;</span></span>
+    </a>
+
+    <nav class="masthead__nav" aria-label="Site navigation">
+      <a href="https://github.com/maulikmehta/authorkit" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+
+  </div>
+</header>
+
+<main>
 <div class="wrap">
 
-  <header>
-    <div class="lockup">
-      <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M4 4h56v56H4z M14 52C33 50 50 36 52 16V52z"/>
-      </svg>
-      <span class="wordmark">AuthorKit<span class="tm">&trade;</span></span>
-    </div>
-
-    <h1>Your Obsidian vault, print-ready.</h1>
-    <p class="lede">
-      A Quarto&nbsp;+&nbsp;Typst build pipeline and Claude Code plugin that takes a book
-      from scene files to a press PDF and a Kindle interior &mdash; driven by one small
-      <code>book.yml</code> per title, not a near-identical build script per title.
+  <!-- ═══ Hero ══════════════════════════════════════════════ -->
+  <section class="hero">
+    <p class="hero__eyebrow">Publishing Pipeline · Free &amp; Open Source</p>
+    <h1 class="hero__headline">Your Obsidian vault,<br><em>print-ready.</em></h1>
+    <p class="hero__lede">
+      A Quarto&nbsp;+&nbsp;Typst build pipeline and Claude&nbsp;Code plugin that takes a book
+      from scene files to a press PDF and Kindle interior — driven by one small
+      <code>book.yml</code> per title, not a near-identical build script per book.
     </p>
+  </section>
 
-    <div class="proof">
-      Built and run by <a href="https://swatisjournal.com">Swati Joshi</a> &mdash;
-      <b>7</b> titles, <b>16</b> live editions across Amazon.com, Amazon.in,
-      IngramSpark and Barnes&nbsp;&amp;&nbsp;Noble, all on owned ISBNs.
-      This is the pipeline behind them.
-    </div>
-  </header>
-
-  <main>
-    <h2>What you get</h2>
+  <!-- ═══ Skills ════════════════════════════════════════════ -->
+  <section aria-labelledby="skills-head">
+    <h2 class="section-head" id="skills-head">What you get</h2>
     <dl>
       <dt>/book-new</dt>
-      <dd>Scaffolds a book vault &mdash; asks for title, format, manuscript status and target channels, then writes the structure.</dd>
+      <dd>Scaffolds a book vault — asks for title, format, manuscript status and target channels, then writes the structure.</dd>
 
       <dt>/book-audit-vault</dt>
       <dd>Checks the vault is sound: <code>book.yml</code> valid, <code>Story/Index.md</code> and <code>Characters/</code> present, fonts available for the build.</dd>
 
       <dt>/book-audit-manuscript</dt>
-      <dd>Checks the manuscript itself &mdash; characters referenced but missing a note, act and chapter drift, first mentions that should be linked.</dd>
+      <dd>Checks the manuscript itself — characters referenced but missing a note, act and chapter drift, first mentions that should be linked.</dd>
 
       <dt>/book-build</dt>
       <dd>Renders the print PDF with bleed, trim and cover-spread lockup, and preps the Kindle interior from the same source.</dd>
     </dl>
+  </section>
 
-    <h2>Install</h2>
+  <!-- ═══ Install ═══════════════════════════════════════════ -->
+  <section aria-labelledby="install-head">
+    <h2 class="section-head" id="install-head">Install</h2>
     <pre><code>/plugin marketplace add maulikmehta/authorkit
 /plugin install authorkit</code></pre>
     <p>Free, MIT licensed. Source on <a href="https://github.com/maulikmehta/authorkit">GitHub</a>.</p>
+    <p class="disclaimer">This tool is actively being developed. Results may occasionally be unexpected &mdash; always verify your output before submitting to a distributor.</p>
+  </section>
 
-    <h2>Requirements</h2>
+  <!-- ═══ Requirements ══════════════════════════════════════ -->
+  <section aria-labelledby="req-head">
+    <h2 class="section-head" id="req-head">Requirements</h2>
     <ul>
       <li><a href="https://quarto.org">Quarto</a> &mdash; renders <code>.qmd</code> to Typst to PDF</li>
-      <li>Python 3</li>
+      <li>Python&nbsp;3</li>
       <li>ImageMagick, for cover cropping</li>
       <li>Your own licensed fonts, dropped into <code>pipeline/fonts/</code></li>
     </ul>
+  </section>
 
-    <!-- Publishing services arm goes here when there is an actual offering:
-         intake, pricing, contract. Do not claim a press that cannot yet
-         accept a manuscript. -->
-  </main>
+  <div class="proof">
+    AuthorKit is an initiative by <a href="https://swatisjournal.com">Swati Joshi</a>.
+    She publishes <b>6</b>&nbsp;titles across <b>13</b>&nbsp;live editions — Amazon.com, Amazon.in,
+    IngramSpark and Barnes&nbsp;&amp;&nbsp;Noble — using this pipeline.
+  </div>
 
-  <footer>
-    <p>AuthorKit&trade; is owned and operated by Swati Joshi.</p>
-    <p>Her catalogue: <a href="https://swatisjournal.com">swatisjournal.com</a></p>
-  </footer>
+</div><!-- /.wrap -->
 
-</div>
+</main>
+
+<!-- ═══ Colophon ══════════════════════════════════════════════ -->
+<footer class="colophon">
+  <div class="wrap colophon__inner">
+
+    <div class="colophon__brand">
+      <svg class="colophon__mark" viewBox="163.81 159.67 607.19 703.21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M745.91,159.67H219.81a56.16,56.16,0,0,0-56,56V806.88a56.16,56.16,0,0,0,56,56H771V159.67ZM709,789.15H265.14C510.75,789.15,709,586.93,709,341.32Z"/>
+      </svg>
+      <span>AuthorKit&trade; &middot; Built by <a href="https://maulikmehta.com">Maulik Mehta</a></span>
+    </div>
+
+  </div>
+</footer>
+
 </body>
 </html>
+
