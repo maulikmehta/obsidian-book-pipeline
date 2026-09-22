@@ -62,6 +62,14 @@ recto and running folios; an **illustrated** book places its own layout in
 Piped or non-interactive input skips the interview, scaffolds a prose book
 with defaults, and says so.
 
+## Licence
+
+MIT, in `LICENSE` — that covers the software.
+
+The **AuthorKit** name and the colophon are trademarks and are not licensed
+by it. Fork freely; if you ship your fork as your own, replace the mark and
+the name. See [TRADEMARK.md](TRADEMARK.md).
+
 ## Examples
 
 Two runnable vaults in [`examples/`](examples/) — a nested novel and a flat
