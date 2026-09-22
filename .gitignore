@@ -39,7 +39,10 @@ examples/*/interior.*
 examples/*/cover.*
 examples/*/.quarto/
 examples/*/Strategy/creative/skeleton.html
-# Quarto drops its own .gitignore into a book folder. The demos'
-# _quarto.yml files ARE tracked -- alice-novel ships real trade-fiction
-# typesetting, which is the point of it.
+# Quarto drops its own .gitignore into a book folder, and build.py symlinks
+# the shared _quarto.yml into any book that lacks one. Both are generated.
+# alice-novel's _quarto.yml is the exception: a real file carrying real
+# trade-fiction typesetting, which is the point of that demo.
 examples/*/.gitignore
+examples/*/_quarto.yml
+!examples/alice-novel/_quarto.yml
