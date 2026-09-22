@@ -448,28 +448,83 @@
     <p class="hero__eyebrow">Publishing Pipeline · Free &amp; Open Source</p>
     <h1 class="hero__headline">Your Obsidian vault,<br><em>print-ready.</em></h1>
     <p class="hero__lede">
-      A Quarto&nbsp;+&nbsp;Typst build pipeline and Claude&nbsp;Code plugin that takes a book
-      from scene files to a press PDF and Kindle interior — driven by one small
-      <code>book.yml</code> per title, not a near-identical build script per book.
+      Write in Obsidian. Get a press-ready PDF. AuthorKit typesets your Markdown
+      through Quarto&nbsp;+&nbsp;Typst — chapters opening on a recto, binding margins,
+      blank versos without folios — and reads your manuscript while you draft it,
+      flagging the structural problems before they reach a proof.
+    </p>
+    <p class="hero__lede">
+      One small <code>book.yml</code> per title, not a near-identical build
+      script per book. Novels, picture books and workbooks from the same tool.
     </p>
   </section>
 
-  <!-- ═══ Skills ════════════════════════════════════════════ -->
+  <!-- ═══ While you write ═══════════════════════════════════ -->
+  <section aria-labelledby="write-head">
+    <h2 class="section-head" id="write-head">While you write</h2>
+    <dl>
+      <dt>Structure, charted</dt>
+      <dd>Renders your manuscript's actual pacing — scene by scene, act by act — as a chart you can read in one look. Word counts come from the prose, not your intentions about it.</dd>
+
+      <dt>Measured against a shape</dt>
+      <dd>Compare that arc to a named structure: Freytag's Pyramid, or a <em>rasa-cycle</em> template for non-Western dramatic shape. Declare the climax you meant to write and see where it actually falls.</dd>
+
+      <dt>Continuity checks</dt>
+      <dd>Characters referenced but missing a note. Act and chapter drift. Scene files sitting in the folder but absent from the index — in the folder, not in the book.</dd>
+
+      <dt>Script-agnostic linking</dt>
+      <dd>Links each character's first mention to their note. Which scripts, and what inflected tail they carry, is declared per book — a Gujarati-only book and an English-only book configure differently without either touching the code.</dd>
+    </dl>
+  </section>
+
+  <!-- ═══ When you print ════════════════════════════════════ -->
+  <section aria-labelledby="print-head">
+    <h2 class="section-head" id="print-head">When you print</h2>
+    <dl>
+      <dt>Prose, typeset</dt>
+      <dd>Write Markdown; the build sets it. Trim size and bleed, a wider gutter for the binding, chapters opening on a right-hand page, blank versos carrying no folio, old-style figures. The defaults ship with Typst, so it renders with no fonts installed.</dd>
+
+      <dt>Illustrated layout</dt>
+      <dd>A picture book places its own art and type per scene, in a Typst block that stays readable in Obsidian. Bleed is applied on the way out, flipping edge by edge as the leaves demand.</dd>
+
+      <dt>Kindle from the same source</dt>
+      <dd>The ebook interior is built from the scenes that made the print file — no second manuscript to keep in step.</dd>
+
+      <dt>It asks first</dt>
+      <dd>Setup asks what kind of book this is before it writes anything, because a novel and a picture book want opposite page setups. Getting it wrong yields a valid PDF of the wrong shape.</dd>
+    </dl>
+  </section>
+
+  <!-- ═══ In Claude Code ════════════════════════════════════ -->
   <section aria-labelledby="skills-head">
-    <h2 class="section-head" id="skills-head">What you get</h2>
+    <h2 class="section-head" id="skills-head">In Claude Code</h2>
     <dl>
       <dt>/book-new</dt>
       <dd>Scaffolds a book vault — asks for title, format, manuscript status and target channels, then writes the structure.</dd>
 
       <dt>/book-audit-vault</dt>
-      <dd>Checks the vault is sound: <code>book.yml</code> valid, <code>Story/Index.md</code> and <code>Characters/</code> present, fonts available for the build.</dd>
+      <dd>Checks the vault is sound: <code>book.yml</code> valid, <code>Story/Index.md</code> and <code>Characters/</code> present, and refreshes the structure chart.</dd>
 
       <dt>/book-audit-manuscript</dt>
       <dd>Checks the manuscript itself — characters referenced but missing a note, act and chapter drift, first mentions that should be linked.</dd>
 
       <dt>/book-build</dt>
-      <dd>Renders the print PDF with bleed, trim and cover-spread lockup, and preps the Kindle interior from the same source.</dd>
+      <dd>Renders the print PDF and preps the Kindle interior from the same source.</dd>
     </dl>
+  </section>
+
+  <!-- ═══ Or without it ═════════════════════════════════════ -->
+  <section aria-labelledby="cli-head">
+    <h2 class="section-head" id="cli-head">Or without Claude Code</h2>
+    <p>Every one of those is a command. The plugin is a convenience, not the product.</p>
+    <pre><code>python3 authoring/cli.py init       # interview, then scaffold
+python3 authoring/cli.py skeleton   # structure + pacing chart
+python3 authoring/cli.py link       # first mentions -&gt; character notes
+python3 authoring/cli.py check      # continuity and unlisted scenes
+python3 pipeline/build.py           # -&gt; Deliver/&lt;title&gt;.pdf</code></pre>
+    <p>Two runnable example vaults ship with it — a nested novel and a flat
+    picture book, both public-domain text, under 14&nbsp;KB together. The kit
+    self-tests in 47 checks.</p>
   </section>
 
   <!-- ═══ Install ═══════════════════════════════════════════ -->
