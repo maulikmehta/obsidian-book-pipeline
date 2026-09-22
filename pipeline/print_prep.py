@@ -18,6 +18,19 @@ TYPST_BLOCK = re.compile(r'<!-- typst(.*?)-->', re.DOTALL)
 _FRONTMATTER = re.compile(r'\A---\s*\n.*?\n---\s*\n', re.DOTALL)
 
 
+def prose_body(text):
+    """A scene's Markdown, with frontmatter and any typst blocks removed.
+
+    This is what reaches the .qmd for a book that writes prose instead of
+    hand-placing layout: Quarto turns it into Typst the same way it turns
+    any Markdown into Typst. Wikilinks are stripped for the same reason the
+    typst path strips them - they are an authoring aid and must not print.
+    """
+    body = _FRONTMATTER.sub('', text)
+    body = TYPST_BLOCK.sub('', body)
+    return strip_wikilinks(body).strip()
+
+
 def _has_prose(text):
     """True if anything but frontmatter and typst blocks carries content.
 
@@ -242,8 +255,30 @@ def load_spreads(book_dir, cfg, kindle=False):
 
 
 def scene_files(scenes_dir):
-    return sorted(f for f in os.listdir(scenes_dir)
-                  if f.endswith('.md') and f != 'Index.md')
+    """Scene files in READING order, which is Story/Index.md's order.
+
+    Sorting the directory instead put every heading file after the prose:
+    "01-Scene" sorts before "Act-I" and "Chapter-1", so a novel came out as
+    its whole text followed by four orphaned chapter titles. Picture books
+    never noticed, because their filenames are numbered in reading order and
+    they carry no act or chapter files.
+
+    Anything on disk but absent from Index.md is appended, sorted, rather
+    than dropped -- `cli.py check` is what reports it as unlisted.
+    """
+    on_disk = sorted(f for f in os.listdir(scenes_dir)
+                     if f.endswith('.md') and f != 'Index.md')
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.dirname(
+            os.path.abspath(__file__))))
+        from authoring import structure
+        listed = [e.file + '.md' if not e.file.endswith('.md') else e.file
+                  for e in structure.entries()]
+    except Exception:
+        return on_disk          # no authoring kit alongside: fall back
+    known = set(on_disk)
+    ordered = [f for f in listed if f in known]
+    return ordered + [f for f in on_disk if f not in set(ordered)]
 
 
 def matches(filename, patterns):
@@ -276,8 +311,23 @@ def process_files(files, scenes_dir, dest_path, spreads=None, preamble=None,
     # An empty target must stay empty: build.py takes a zero-byte qmd as "this
     # book has no scenes for that target" and skips it, and a preamble alone
     # would otherwise make it render a blank cover.
+    # Read every scene once, so the mode is known before anything is emitted.
+    bodies = {}
+    for filename in files:
+        if filename in spreads:
+            continue
+        with open(os.path.join(scenes_dir, filename), encoding='utf-8') as f:
+            bodies[filename] = f.read()
+    laid_out = [f for f, t in bodies.items() if TYPST_BLOCK.search(t)]
+    prose_only = [f for f, t in bodies.items()
+                  if not TYPST_BLOCK.search(t) and _has_prose(t)]
+    # PAGE_SETUP kills page numbering. That is right for a picture book, whose
+    # folios are drawn into the art, and wrong for a prose book, whose own
+    # _quarto.yml sets a running footer. Emit it only when layout is present.
+    layout_mode = bool(laid_out) or bool(spreads)
+
     out = ""
-    if files:
+    if files and layout_mode:
         out = "```{=typst}\n%s\n```\n\n" % PAGE_SETUP
     if preamble and files:
         out += "```{=typst}\n%s\n```\n\n" % preamble
@@ -285,7 +335,6 @@ def process_files(files, scenes_dir, dest_path, spreads=None, preamble=None,
     # the leaves it emits. add_bleed needs it: the bleed goes on the outer
     # edge, and which edge that is flips from leaf to leaf.
     leaf = 1
-    silent = []
     for filename in files:
         # A shared spread replaces the file's own block entirely. The .md keeps
         # its prose so the scene still reads in Obsidian; only the layout moves.
@@ -294,15 +343,16 @@ def process_files(files, scenes_dir, dest_path, spreads=None, preamble=None,
             leaf += leaves
             out += "```{=typst}\n%s\n```\n\n" % bled
             continue
-        with open(os.path.join(scenes_dir, filename), encoding='utf-8') as f:
-            content = f.read()
+        content = bodies[filename]
         blocks = TYPST_BLOCK.findall(content)
-        # A scene with prose but no <!-- typst --> block contributes NOTHING.
-        # That used to pass in silence: the .qmd came out near-empty, Quarto
-        # rendered a blank PDF, and build.py still printed "ok". Anyone who
-        # drafted in plain Markdown got a success message and no book.
-        if not blocks and _has_prose(content):
-            silent.append(filename)
+        # No layout block: the scene is prose, so it goes through as Markdown
+        # and Quarto typesets it. This used to be dropped in silence, which
+        # gave anyone drafting in plain Markdown a blank PDF and an "ok".
+        if not blocks:
+            body = prose_body(content)
+            if body:
+                out += body + "\n\n"
+            continue
         for block in blocks:
             # scene files reference ../images/ so they preview in Obsidian;
             # Quarto renders from the book root, where the path is images/
@@ -317,16 +367,18 @@ def process_files(files, scenes_dir, dest_path, spreads=None, preamble=None,
     with open(dest_path, 'w', encoding='utf-8') as f:
         f.write(out)
     print("  %s <- %d scene(s)" % (dest_path, len(files)))
-    if silent:
-        print("  WARNING: %d scene(s) contributed no layout and were dropped:"
-              % len(silent))
-        for f in silent[:8]:
-            print("    %s" % f)
-        if len(silent) > 8:
-            print("    ... and %d more" % (len(silent) - 8))
-        print("  Layout lives in an <!-- typst ... --> comment inside each")
-        print("  scene. Prose outside that comment is not typeset. See")
-        print("  examples/ for a scene that renders.")
+    if prose_only and not layout_mode:
+        print("  %d scene(s) typeset from Markdown" % len(prose_only))
+    elif prose_only and layout_mode and apply_bleed:
+        # add_bleed flips the bleed edge leaf by leaf, counting leaves as the
+        # typst blocks emit them. Prose reflows, so its leaf count is not known
+        # until Quarto runs, and every block after it can land on the wrong
+        # edge. Mixing is allowed, but it must not be mixed silently.
+        print("  WARNING: %d prose scene(s) mixed with laid-out scenes."
+              % len(prose_only))
+        print("  Bleed alternates per leaf and prose reflows, so the bleed")
+        print("  edge after a prose scene may be wrong. Keep a bled interior")
+        print("  all-layout, or move the prose into a typst block.")
 
 
 def run(book_dir=".", cover_prefixes=None, interior_excludes=None, cfg=None,
