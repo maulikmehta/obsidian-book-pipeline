@@ -1,0 +1,85 @@
+# Trade-fiction typesetting: 5.5 x 8.5in paperback, the shape a novel or
+# novella ships in. The shared pipeline/_quarto.yml sets none of this on
+# purpose -- type is the book's design. This file is that design, and
+# build.py leaves a book alone once it ships one.
+#
+# Libertinus Serif is bundled with Typst, so this renders with no fonts
+# installed. Swap it for your own licensed face and drop the files in a
+# fonts/ folder beside book.yml.
+
+project:
+  type: default
+  render:
+    - manuscript.qmd
+
+format:
+  typst:
+    keep-typ: true
+    toc: false
+    number-sections: false
+    mainfont: "Libertinus Serif"
+    fontsize: 11pt
+    include-before-body:
+      - text: |
+          // Trim 5.5 x 8.5in plus 0.125in bleed on the three outer edges.
+          // `inside` is the gutter: wider, because the binding eats it.
+          #set page(
+            width: 5.625in,
+            height: 8.75in,
+            margin: (top: 0.9in, bottom: 0.9in, inside: 0.875in, outside: 0.7in),
+            binding: left,
+          )
+
+          #set par(leading: 0.78em, spacing: 1.1em, justify: true,
+                   first-line-indent: 1.2em)
+
+          // A blank verso carries no folio. It is the pause before a chapter
+          // opens, and a page number printed on it reads as a mistake.
+          #let blank = state("blank", false)
+
+          #let open-on-recto() = {
+            blank.update(true)
+            pagebreak(to: "even", weak: true)
+            pagebreak(to: "odd")
+            blank.update(false)
+          }
+
+          // Part titles: their own recto, nothing else on the page.
+          #show heading.where(level: 1): it => {
+            open-on-recto()
+            v(3.2in, weak: false)
+            align(center, text(size: 15pt, tracking: 0.22em)[#smallcaps(it.body)])
+            pagebreak(weak: true)
+          }
+
+          // Chapters open on a right-hand page, the trade convention.
+          #show heading.where(level: 2): it => {
+            counter(heading).step()
+            open-on-recto()
+            v(1.2in, weak: false)
+            align(center, text(size: 13pt, tracking: 0.16em)[
+              #smallcaps[Chapter #counter(heading).display()]
+            ])
+            v(0.7em)
+            align(center, grid(
+              columns: (18%, auto, 18%), gutter: 0.9em,
+              align: (horizon, horizon, horizon),
+              line(length: 100%, stroke: 0.4pt),
+              text(size: 8pt)[#sym.diamond.filled],
+              line(length: 100%, stroke: 0.4pt),
+            ))
+            v(0.8em)
+            align(center, text(size: 17pt, tracking: 0.06em)[#smallcaps(it.body)])
+            v(2.2em, weak: false)
+          }
+
+          // Scene headings are silent: a scene is a break in the prose, not
+          // a titled section. The frontmatter title is for the tools.
+          #show heading.where(level: 3): it => { v(1.4em) }
+
+          // Old-style figures centred at the foot; nothing on a blank verso.
+          #set page(footer: context {
+            if blank.get() { return }
+            set text(size: 10pt, number-type: "old-style")
+            align(center)[#counter(page).get().first()]
+          })

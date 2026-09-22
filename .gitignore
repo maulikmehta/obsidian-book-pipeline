@@ -39,8 +39,7 @@ examples/*/interior.*
 examples/*/cover.*
 examples/*/.quarto/
 examples/*/Strategy/creative/skeleton.html
-# build.py copies the shared _quarto.yml in beside the book, and
-# Quarto drops its own .gitignore. Committing either invites someone
-# to edit the copy instead of pipeline/_quarto.yml.
-examples/*/_quarto.yml
+# Quarto drops its own .gitignore into a book folder. The demos'
+# _quarto.yml files ARE tracked -- alice-novel ships real trade-fiction
+# typesetting, which is the point of it.
 examples/*/.gitignore
