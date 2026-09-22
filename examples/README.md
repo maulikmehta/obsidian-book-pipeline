@@ -24,9 +24,10 @@ python3 ../../authoring/cli.py skeleton   # structural chart
 python3 ../../pipeline/build.py           # -> Deliver/<title>.pdf
 ```
 
-`build.py` needs Quarto. It will warn `unknown font family: charter bt` and
-fall back to a default face — expected, since fonts are not redistributable
-and `pipeline/fonts/` ships empty. Point `_quarto.yml` at a font you have.
+`build.py` needs Quarto, and nothing else. Neither demo names a typeface,
+so both render in Typst's default face — type is a book's design decision,
+not something the pipeline should assert. To set your own, give the book its
+own `_quarto.yml` and a `fonts/` folder beside `book.yml`.
 
 ## The one thing that catches everyone
 

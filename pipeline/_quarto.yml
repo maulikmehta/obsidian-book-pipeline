@@ -1,3 +1,18 @@
+# Shared Quarto config. Structural only -- it deliberately sets no typeface,
+# no point size and no leading, because those are the book's design, not the
+# pipeline's. Typst's own defaults apply until a book says otherwise.
+#
+# A book that wants its own typography ships its own _quarto.yml beside
+# book.yml; build.py leaves it alone and stops handing over this one. Put
+# the faces in that book's fonts/ and set them here, e.g.
+#
+#   format:
+#     typst:
+#       include-in-header:
+#         - text: |
+#             #set text(font: "Your Face", size: 11pt)
+#             #set par(justify: true, leading: 0.65em)
+
 project:
   type: default
   render:
@@ -7,8 +22,3 @@ format:
   typst:
     toc: false
     number-sections: false
-    include-in-header:
-      - text: |
-          // Set base text properties
-          #set text(font: "Charter BT", size: 22pt)
-          #set par(justify: true, leading: 0.8em)

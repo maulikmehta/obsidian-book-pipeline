@@ -19,7 +19,10 @@ IngramSpark and Barnes & Noble, on owned ISBNs.
 - [Quarto](https://quarto.org) (renders `.qmd` → Typst → PDF)
 - Python 3
 - ImageMagick (`magick`/`convert`) for cover cropping
-- Your own licensed fonts, dropped into `pipeline/fonts/` (see that folder's README)
+- A typeface, only if you want one. The shared `_quarto.yml` names none:
+  type is the book's design, so a book sets its own and keeps the faces
+  in its own `fonts/`. See `pipeline/fonts/README.md` for the shared-shelf
+  case.
 
 ## Layout
 

@@ -197,11 +197,14 @@ def build(book_dir):
         print("  cover lockup: %s" % lockup)
 
     env = os.environ.copy()
-    # fonts are shared; a book may still keep a local fonts/ and it wins
-    paths = [os.path.join(HERE, "fonts")]
-    if os.path.isdir(os.path.join(book_dir, "fonts")):
-        paths.insert(0, os.path.join(book_dir, "fonts"))
-    env["TYPST_FONT_PATHS"] = os.pathsep.join(paths)
+    # A book's own fonts/ is the normal home -- a typeface is part of that
+    # book's design. pipeline/fonts/ is an optional shared shelf for a house
+    # face used across a catalogue. Book-local wins, and paths that do not
+    # exist are dropped so Typst is not handed a phantom directory.
+    paths = [p for p in (os.path.join(book_dir, "fonts"),
+                         os.path.join(HERE, "fonts")) if os.path.isdir(p)]
+    if paths:
+        env["TYPST_FONT_PATHS"] = os.pathsep.join(paths)
 
     deliver = os.path.join(book_dir, "Deliver")
     os.makedirs(deliver, exist_ok=True)
