@@ -50,6 +50,18 @@ so they stay readable in a plain editor:
 Quarto inputs (`manuscript.qmd`, `cover.qmd`, `interior.qmd`); `build.py`
 renders them and produces the PDFs.
 
+### Starting a book
+
+`init` asks three questions before it writes anything: what kind of book
+this is, its trim size, and its title. The kind matters because it changes
+what the build does — a **prose** book is typeset from your Markdown and
+gets a `_quarto.yml` with page geometry, binding margins, chapters opening
+recto and running folios; an **illustrated** book places its own layout in
+`<!-- typst -->` blocks and suppresses folios, because the art carries them.
+
+Piped or non-interactive input skips the interview, scaffolds a prose book
+with defaults, and says so.
+
 ## Examples
 
 Two runnable vaults in [`examples/`](examples/) — a nested novel and a flat
@@ -111,7 +123,7 @@ Obsidian vault while it's still being written. Run from a book's folder (the
 one holding `book.yml` and `Story/`):
 
 ```
-python3 authoring/cli.py init                # scaffold a new vault here
+python3 authoring/cli.py init                # interview + scaffold a vault
 python3 authoring/cli.py skeleton             # render Story/ to a structural
                                                # visualization (apps/storyarc)
 python3 authoring/cli.py link [--write]       # link each character's first
