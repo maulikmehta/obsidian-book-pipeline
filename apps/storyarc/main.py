@@ -105,7 +105,11 @@ def findings(c, has_benchmark=False):
             prev_low = r[mi-1]["intensity"] <= min(x["intensity"] for x in r) + 2
             approach = (". Rested immediately before it." if prev_low else ". Nothing lowers the audience before it.")
         else:
+            # mi == 1: the sharpest turn IS the opening move, so there is no
+            # earlier scene to have rested the audience. Leaving `approach`
+            # unset here raised UnboundLocalError three lines down.
             prev_low = True
+            approach = ". It is the opening turn, so nothing precedes it."
         out.append({
             "title": "The sharpest turn",
             "desc": f"{U.title()} {r[mi-1]['id']} → {r[mi]['id']} moves {r[mi]['intensity']-r[mi-1]['intensity']:+d}"
@@ -667,10 +671,24 @@ def _template():
         return kit          # a hand-built contract renders outside a book
     return local if os.path.exists(local) else kit
 
+class NoScenes(Exception):
+    """A freshly scaffolded vault has no scenes to chart yet."""
+
+
 # ---------- write: adapt this manuscript, render, save ----------------------
 def write():
     """Render the current book and return the path written."""
+    contract = from_manuscript()
+    # A vault straight out of `cli.py init` has an empty Story/. Charting it
+    # would divide by a zero total duration, so say so instead of tracing back.
+    if not contract.get("rows"):
+        raise NoScenes
+    # Render before opening the file. open(..., "w") truncates, so rendering
+    # inside the write() call left a 0-byte skeleton.html behind on any
+    # failure - which then tripped the stale-version warning on the next run.
+    html = render(contract)
     out = os.path.join(config.root(), "Strategy", "creative", "skeleton.html")
     os.makedirs(os.path.dirname(out), exist_ok=True)
-    open(out, "w", encoding="utf-8").write(render(from_manuscript()))
+    with open(out, "w", encoding="utf-8") as fh:
+        fh.write(html)
     return out

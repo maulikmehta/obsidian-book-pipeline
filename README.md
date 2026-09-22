@@ -47,6 +47,15 @@ so they stay readable in a plain editor:
 Quarto inputs (`manuscript.qmd`, `cover.qmd`, `interior.qmd`); `build.py`
 renders them and produces the PDFs.
 
+## Examples
+
+Two runnable vaults in [`examples/`](examples/) — a nested novel and a flat
+picture book, both public-domain text, under 8 KB together. Start there:
+
+```sh
+cd examples/alice-novel && python3 ../../pipeline/build.py
+```
+
 ## book.yml
 
 ```yaml

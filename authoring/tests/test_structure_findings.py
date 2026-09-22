@@ -41,7 +41,28 @@ def test_a_single_group_produces_nothing():
     assert skeleton.structure_findings(_c([(1, 9)])) == []
 
 
+def test_sharpest_turn_at_the_opening_does_not_crash():
+    """The biggest jump landing on the FIRST transition left `approach`
+    unbound in findings(), so any book whose sharpest turn is its opening
+    move raised UnboundLocalError. Intensities 2,6,7,9 do exactly that:
+    the 2->6 step is the largest and sits at index 1."""
+    c = _c([(1, 2), (2, 2)], intensities=[2, 6, 7, 9])
+    out = skeleton.findings(c, has_benchmark=False)
+    turn = [f for f in out if f["title"] == "The sharpest turn"]
+    assert turn, "the sharpest-turn finding went missing"
+    assert not turn[0]["warn"], "an opening turn has nothing before it to warn about"
+
+
+def test_sharpest_turn_mid_book_still_reports_its_approach():
+    c = _c([(1, 2), (2, 2)], intensities=[5, 4, 9, 9])
+    out = skeleton.findings(c, has_benchmark=False)
+    turn = [f for f in out if f["title"] == "The sharpest turn"]
+    assert turn and "before it" in turn[0]["desc"]
+
+
 TESTS = [test_proportions_are_reported_for_a_three_act_work,
          test_no_warning_without_expected_proportions,
          test_drift_from_expected_proportions_warns,
-         test_a_single_group_produces_nothing]
+         test_a_single_group_produces_nothing,
+         test_sharpest_turn_at_the_opening_does_not_crash,
+         test_sharpest_turn_mid_book_still_reports_its_approach]

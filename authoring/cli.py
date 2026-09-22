@@ -56,7 +56,13 @@ def main(argv):
                         m = re.search(r'<meta name="kit-version" content="([^"]+)">', f.read())
                     if not m or m.group(1) != config.KIT_VERSION:
                         print(f"WARN: Strategy/creative/skeleton.html predates kit version {config.KIT_VERSION}. Regenerating...")
-                print(f"wrote {skeleton.write()}")
+                try:
+                    print(f"wrote {skeleton.write()}")
+                except skeleton.NoScenes:
+                    print("No scenes yet - Story/ is empty.")
+                    print("Add scene files to Story/ and list them in "
+                          "Story/Index.md, then run this again.")
+                    return 0
             return 0
         if cmd == "link":
             linker.run("--write" in argv); return 0
@@ -64,8 +70,18 @@ def main(argv):
             bad = personas.check()
             for v in bad:
                 print(v)
-            print(f"{len(bad)} violation(s)")
-            return 1 if bad else 0
+            # structure.unlisted() existed but nothing called it. A scene file
+            # missing from Story/Index.md is silently not in the book -- every
+            # other tool skips it without a word, which reads as "the tool is
+            # broken" rather than "the file is not listed".
+            from authoring import structure
+            stray = structure.unlisted()
+            for f in stray:
+                print(f"{f}: in Story/ but not listed in Story/Index.md - "
+                      f"it is not in the book")
+            n = len(bad) + len(stray)
+            print(f"{n} violation(s)")
+            return 1 if n else 0
     except config.BookError as e:
         print(f"error: {e}", file=sys.stderr)
         return 2

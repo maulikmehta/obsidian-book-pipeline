@@ -1,0 +1,13 @@
+title: "The Tortoise and the Hare"
+medium: picture book
+targets: ["manuscript"]
+single_pages: true
+
+authoring:
+  intensity_field: tension
+  key_field: rasa
+  extras: ["the Fox", "the wood"]
+  link:
+    scripts:
+      - range: "A-Za-z"
+        tail: "(?:'s)?"

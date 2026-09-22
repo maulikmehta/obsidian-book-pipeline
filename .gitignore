@@ -29,3 +29,18 @@ pipeline/fonts/*.ttf
 _book/
 .quarto/
 *.qmd
+
+# Demo build output. The examples/ vaults are inputs only -- running them
+# writes PDFs, .qmd and skeleton.html next to the source, and none of that
+# belongs in the repo.
+examples/*/Deliver/
+examples/*/manuscript.*
+examples/*/interior.*
+examples/*/cover.*
+examples/*/.quarto/
+examples/*/Strategy/creative/skeleton.html
+# build.py copies the shared _quarto.yml in beside the book, and
+# Quarto drops its own .gitignore. Committing either invites someone
+# to edit the copy instead of pipeline/_quarto.yml.
+examples/*/_quarto.yml
+examples/*/.gitignore
