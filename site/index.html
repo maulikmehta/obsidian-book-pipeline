@@ -200,6 +200,9 @@
   /* Wrap bottom — breathe before footer border */
   main > .wrap { padding-bottom: 2rem; }
 
+  /* Masthead and colophon span the same wide column as resources.authorkit.pro. */
+  .wrap--page { max-width: 64rem; width: 100%; }
+
 
   .section-head {
     font-family: var(--font-body);
@@ -461,7 +464,7 @@
 
 <!-- ═══ Masthead ══════════════════════════════════════════════ -->
 <header class="masthead">
-  <div class="wrap masthead__inner">
+  <div class="wrap wrap--page masthead__inner">
 
     <a class="masthead__brand" href="/" aria-label="AuthorKit home">
       <!-- House colophon: portrait book, left corners rounded (spine), right square (fore-edge) -->
@@ -624,7 +627,7 @@ python3 pipeline/build.py           # -&gt; Deliver/&lt;title&gt;.pdf</code></pr
 
 <!-- ═══ Colophon ══════════════════════════════════════════════ -->
 <footer class="colophon">
-  <div class="wrap colophon__inner">
+  <div class="wrap wrap--page colophon__inner">
 
     <div class="colophon__brand">
       <svg class="colophon__mark" viewBox="163.81 159.67 607.19 703.21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
