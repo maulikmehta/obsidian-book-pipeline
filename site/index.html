@@ -430,6 +430,31 @@
   @media (max-width: 480px) {
     .titles-list li { flex-direction: column; gap: .1rem; }
   }
+
+  /* Outbound links carry the brand's link arrow (same shape as Swati's
+     Journal's .link-arrow): half opacity, nudges up-right on hover. */
+  main a[href^="http"]:not([href*="authorkit.pro"])::after,
+  .colophon a[href^="http"]:not([href*="authorkit.pro"])::after {
+    content: "";
+    display: inline-block;
+    width: .7em;
+    height: .7em;
+    margin-left: .2em;
+    vertical-align: .02em;
+    background: currentColor;
+    opacity: .5;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='7' y1='17' x2='17' y2='7'/%3E%3Cpolyline points='7 7 17 7 17 17'/%3E%3C/svg%3E") no-repeat center / contain;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='7' y1='17' x2='17' y2='7'/%3E%3Cpolyline points='7 7 17 7 17 17'/%3E%3C/svg%3E") no-repeat center / contain;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+  main a[href^="http"]:not([href*="authorkit.pro"]):hover::after,
+  .colophon a[href^="http"]:not([href*="authorkit.pro"]):hover::after {
+    transform: translate(2px, -2px);
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    main a::after, .ak-sidebar a::after, .colophon a::after { transition: none; }
+  }
 </style>
 </head>
 <body>
