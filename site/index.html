@@ -371,8 +371,14 @@
 
   /* ── Responsive ──────────────────────────────────────────── */
   @media (max-width: 600px) {
-    .masthead__nav { display: none; }
+    .masthead__nav { gap: 1rem; font-size: .85rem; white-space: nowrap; }
+    .masthead__nav .masthead__gh { display: none; }
     .colophon__inner { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 380px) {
+    .masthead__brand { gap: .5rem; }
+    .masthead__name { font-size: 1.15rem; }
   }
 
   /* ── Titles band ─────────────────────────────────────────── */
@@ -442,7 +448,7 @@
 
     <nav class="masthead__nav" aria-label="Site navigation">
       <a href="https://resources.authorkit.pro/cover-calculator/">Cover calculator</a>
-      <a href="https://github.com/maulikmehta/obsidian-book-pipeline"
+      <a class="masthead__gh" href="https://github.com/maulikmehta/obsidian-book-pipeline"
          target="_blank" rel="noopener" aria-label="View the source on GitHub">
         <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"
              aria-hidden="true" focusable="false">
