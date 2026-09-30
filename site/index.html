@@ -455,6 +455,21 @@
     transform: translate(2px, -2px);
     opacity: 1;
   }
+  /* dt/dd pairs sit in a div each, so the grid below can hold a pair together;
+     the spacing between pairs matches the old flat list. */
+  dl > div + div > dt:first-child { margin-top: .95rem; }
+
+  /* ── Desktop: the resources width, short items side by side ─── */
+  @media (min-width: 60rem) {
+    main > .wrap--home { max-width: 64rem; }
+    .hero__ledes { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2.5rem; }
+    dl { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 2.5rem; }
+    dl > div + div > dt:first-child { margin-top: 0; }
+    .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 2.5rem; align-items: start; }
+    .services__body { max-width: 42rem; }
+    main > .wrap--home section > p:not(.disclaimer) { max-width: 42rem; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     main a::after, .ak-sidebar a::after, .colophon a::after { transition: none; }
   }
@@ -489,12 +504,13 @@
 </header>
 
 <main>
-<div class="wrap">
+<div class="wrap wrap--home">
 
   <!-- ═══ Hero ══════════════════════════════════════════════ -->
   <section class="hero">
     <p class="hero__eyebrow">Publishing Pipeline · Free &amp; Open Source</p>
     <h1 class="hero__headline">Your Obsidian vault,<br><em>print-ready.</em></h1>
+    <div class="hero__ledes">
     <p class="hero__lede">
       Write in Obsidian. Get a press-ready PDF. AuthorKit typesets your Markdown
       through Quarto&nbsp;+&nbsp;Typst — chapters opening on a recto, binding margins,
@@ -505,23 +521,17 @@
       One small <code>book.yml</code> per title, not a near-identical build
       script per book. Novels, picture books and workbooks from the same tool.
     </p>
+    </div>
   </section>
 
   <!-- ═══ While you write ═══════════════════════════════════ -->
   <section aria-labelledby="write-head">
     <h2 class="section-head" id="write-head">While you write</h2>
     <dl>
-      <dt>Structure, charted</dt>
-      <dd>Renders your manuscript's actual pacing — scene by scene, act by act — as a chart you can read in one look. Word counts come from the prose, not your intentions about it.</dd>
-
-      <dt>Measured against a shape</dt>
-      <dd>Compare that arc to a named structure: Freytag's Pyramid, or a <em>rasa-cycle</em> template for non-Western dramatic shape. Declare the climax you meant to write and see where it actually falls.</dd>
-
-      <dt>Continuity checks</dt>
-      <dd>Characters referenced but missing a note. Act and chapter drift. Scene files sitting in the folder but absent from the index — in the folder, not in the book.</dd>
-
-      <dt>Script-agnostic linking</dt>
-      <dd>Links each character's first mention to their note. Which scripts, and what inflected tail they carry, is declared per book — a Gujarati-only book and an English-only book configure differently without either touching the code.</dd>
+      <div><dt>Structure, charted</dt> <dd>Renders your manuscript's actual pacing — scene by scene, act by act — as a chart you can read in one look. Word counts come from the prose, not your intentions about it.</dd></div>
+      <div><dt>Measured against a shape</dt> <dd>Compare that arc to a named structure: Freytag's Pyramid, or a <em>rasa-cycle</em> template for non-Western dramatic shape. Declare the climax you meant to write and see where it actually falls.</dd></div>
+      <div><dt>Continuity checks</dt> <dd>Characters referenced but missing a note. Act and chapter drift. Scene files sitting in the folder but absent from the index — in the folder, not in the book.</dd></div>
+      <div><dt>Script-agnostic linking</dt> <dd>Links each character's first mention to their note. Which scripts, and what inflected tail they carry, is declared per book — a Gujarati-only book and an English-only book configure differently without either touching the code.</dd></div>
     </dl>
   </section>
 
@@ -529,17 +539,10 @@
   <section aria-labelledby="print-head">
     <h2 class="section-head" id="print-head">When you print</h2>
     <dl>
-      <dt>Prose, typeset</dt>
-      <dd>Write Markdown; the build sets it. Trim size and bleed, a wider gutter for the binding, chapters opening on a right-hand page, blank versos carrying no folio, old-style figures. The defaults ship with Typst, so it renders with no fonts installed.</dd>
-
-      <dt>Illustrated layout</dt>
-      <dd>A picture book places its own art and type per scene, in a Typst block that stays readable in Obsidian. Bleed is applied on the way out, flipping edge by edge as the leaves demand.</dd>
-
-      <dt>Kindle from the same source</dt>
-      <dd>The ebook interior is built from the scenes that made the print file — no second manuscript to keep in step.</dd>
-
-      <dt>It asks first</dt>
-      <dd>Setup asks what kind of book this is before it writes anything, because a novel and a picture book want opposite page setups. Getting it wrong yields a valid PDF of the wrong shape.</dd>
+      <div><dt>Prose, typeset</dt> <dd>Write Markdown; the build sets it. Trim size and bleed, a wider gutter for the binding, chapters opening on a right-hand page, blank versos carrying no folio, old-style figures. The defaults ship with Typst, so it renders with no fonts installed.</dd></div>
+      <div><dt>Illustrated layout</dt> <dd>A picture book places its own art and type per scene, in a Typst block that stays readable in Obsidian. Bleed is applied on the way out, flipping edge by edge as the leaves demand.</dd></div>
+      <div><dt>Kindle from the same source</dt> <dd>The ebook interior is built from the scenes that made the print file — no second manuscript to keep in step.</dd></div>
+      <div><dt>It asks first</dt> <dd>Setup asks what kind of book this is before it writes anything, because a novel and a picture book want opposite page setups. Getting it wrong yields a valid PDF of the wrong shape.</dd></div>
     </dl>
   </section>
 
@@ -547,17 +550,10 @@
   <section aria-labelledby="skills-head">
     <h2 class="section-head" id="skills-head">In Claude Code</h2>
     <dl>
-      <dt>/book-new</dt>
-      <dd>Scaffolds a book vault — asks for title, format, manuscript status and target channels, then writes the structure.</dd>
-
-      <dt>/book-audit-vault</dt>
-      <dd>Checks the vault is sound: <code>book.yml</code> valid, <code>Story/Index.md</code> and <code>Characters/</code> present, and refreshes the structure chart.</dd>
-
-      <dt>/book-audit-manuscript</dt>
-      <dd>Checks the manuscript itself — characters referenced but missing a note, act and chapter drift, first mentions that should be linked.</dd>
-
-      <dt>/book-build</dt>
-      <dd>Renders the print PDF and preps the Kindle interior from the same source.</dd>
+      <div><dt>/book-new</dt> <dd>Scaffolds a book vault — asks for title, format, manuscript status and target channels, then writes the structure.</dd></div>
+      <div><dt>/book-audit-vault</dt> <dd>Checks the vault is sound: <code>book.yml</code> valid, <code>Story/Index.md</code> and <code>Characters/</code> present, and refreshes the structure chart.</dd></div>
+      <div><dt>/book-audit-manuscript</dt> <dd>Checks the manuscript itself — characters referenced but missing a note, act and chapter drift, first mentions that should be linked.</dd></div>
+      <div><dt>/book-build</dt> <dd>Renders the print PDF and preps the Kindle interior from the same source.</dd></div>
     </dl>
   </section>
 
@@ -575,6 +571,7 @@ python3 pipeline/build.py           # -&gt; Deliver/&lt;title&gt;.pdf</code></pr
     self-tests in 47 checks.</p>
   </section>
 
+  <div class="pair">
   <!-- ═══ Install ═══════════════════════════════════════════ -->
   <section aria-labelledby="install-head">
     <h2 class="section-head" id="install-head">Install</h2>
@@ -594,6 +591,7 @@ python3 pipeline/build.py           # -&gt; Deliver/&lt;title&gt;.pdf</code></pr
       <li>A typeface, if you want one &mdash; type is your book&rsquo;s design, not the pipeline&rsquo;s</li>
     </ul>
   </section>
+  </div>
 
   <div class="proof">
     AuthorKit&trade; is an initiative by <a href="https://swatisjournal.com">Swati Joshi</a>.
