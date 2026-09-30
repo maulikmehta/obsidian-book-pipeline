@@ -462,12 +462,10 @@
   /* ── Desktop: the resources width, short items side by side ─── */
   @media (min-width: 60rem) {
     main > .wrap--home { max-width: 64rem; }
-    .hero__ledes { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2.5rem; }
     dl { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 2.5rem; }
     dl > div + div > dt:first-child { margin-top: 0; }
     .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 2.5rem; align-items: start; }
-    .services__body { max-width: 42rem; }
-    main > .wrap--home section > p:not(.disclaimer) { max-width: 42rem; }
+    main > .wrap--home section:not(.services) > p:not(.disclaimer) { max-width: 42rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -510,7 +508,6 @@
   <section class="hero">
     <p class="hero__eyebrow">Publishing Pipeline · Free &amp; Open Source</p>
     <h1 class="hero__headline">Your Obsidian vault,<br><em>print-ready.</em></h1>
-    <div class="hero__ledes">
     <p class="hero__lede">
       Write in Obsidian. Get a press-ready PDF. AuthorKit typesets your Markdown
       through Quarto&nbsp;+&nbsp;Typst — chapters opening on a recto, binding margins,
@@ -521,7 +518,6 @@
       One small <code>book.yml</code> per title, not a near-identical build
       script per book. Novels, picture books and workbooks from the same tool.
     </p>
-    </div>
   </section>
 
   <!-- ═══ While you write ═══════════════════════════════════ -->
