@@ -3,8 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AuthorKit — Publishing Pipeline for Authors</title>
-<meta name="description" content="Obsidian to print-ready book. A Quarto + Typst pipeline and Claude Code plugin for authors. Built and run on 6 published titles across Amazon, IngramSpark and Barnes & Noble.">
+<title>AuthorKit: Obsidian to Print-Ready Book PDF (Free, Open Source)</title>
+<meta name="description" content="AuthorKit is a free, open-source pipeline that turns an Obsidian vault into a print-ready book PDF and a Kindle interior, using Quarto and Typst. Used for 6 published titles on Amazon, IngramSpark and Barnes &amp; Noble.">
+<link rel="canonical" href="https://authorkit.pro/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AuthorKit">
+<meta property="og:title" content="AuthorKit: Obsidian to Print-Ready Book PDF">
+<meta property="og:description" content="AuthorKit is a free, open-source pipeline that turns an Obsidian vault into a print-ready book PDF and a Kindle interior, using Quarto and Typst. Used for 6 published titles on Amazon, IngramSpark and Barnes &amp; Noble.">
+<meta property="og:url" content="https://authorkit.pro/">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://authorkit.pro/#org",
+      "name": "AuthorKit",
+      "url": "https://authorkit.pro/",
+      "founder": {
+        "@type": "Person",
+        "name": "Swati Joshi",
+        "url": "https://swatisjournal.com/"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://authorkit.pro/#website",
+      "name": "AuthorKit",
+      "url": "https://authorkit.pro/",
+      "publisher": {
+        "@id": "https://authorkit.pro/#org"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://authorkit.pro/#app",
+      "name": "AuthorKit",
+      "alternateName": "Obsidian Book Pipeline",
+      "description": "AuthorKit is a free, open-source pipeline that turns an Obsidian vault into a print-ready book PDF and a Kindle interior, using Quarto and Typst. Used for 6 published titles on Amazon, IngramSpark and Barnes & Noble.",
+      "url": "https://authorkit.pro/",
+      "applicationCategory": "DesignApplication",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "license": "https://github.com/maulikmehta/obsidian-book-pipeline/blob/main/LICENSE",
+      "sameAs": "https://github.com/maulikmehta/obsidian-book-pipeline",
+      "publisher": {
+        "@id": "https://authorkit.pro/#org"
+      }
+    }
+  ]
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -509,14 +563,15 @@
     <p class="hero__eyebrow">Publishing Pipeline · Free &amp; Open Source</p>
     <h1 class="hero__headline">Your Obsidian vault,<br><em>print-ready.</em></h1>
     <p class="hero__lede">
-      Write in Obsidian. Get a press-ready PDF. AuthorKit typesets your Markdown
-      through Quarto&nbsp;+&nbsp;Typst — chapters opening on a recto, binding margins,
-      blank versos without folios — and reads your manuscript while you draft it,
-      flagging the structural problems before they reach a proof.
+      AuthorKit is a free, open-source pipeline that turns an Obsidian vault into a
+      print-ready book PDF. It typesets your Markdown through Quarto and Typst, with
+      chapters opening on a recto, binding margins and blank versos without folios.
+      It also reads your manuscript while you draft and points out structural
+      problems before they reach a proof.
     </p>
     <p class="hero__lede">
-      One small <code>book.yml</code> per title, not a near-identical build
-      script per book. Novels, picture books and workbooks from the same tool.
+      Each title needs one small <code>book.yml</code> file instead of its own build
+      script. Novels, picture books and workbooks all come from the same tool.
     </p>
   </section>
 
@@ -524,10 +579,10 @@
   <section aria-labelledby="write-head">
     <h2 class="section-head" id="write-head">While you write</h2>
     <dl>
-      <div><dt>Structure, charted</dt> <dd>Renders your manuscript's actual pacing — scene by scene, act by act — as a chart you can read in one look. Word counts come from the prose, not your intentions about it.</dd></div>
-      <div><dt>Measured against a shape</dt> <dd>Compare that arc to a named structure: Freytag's Pyramid, or a <em>rasa-cycle</em> template for non-Western dramatic shape. Declare the climax you meant to write and see where it actually falls.</dd></div>
-      <div><dt>Continuity checks</dt> <dd>Characters referenced but missing a note. Act and chapter drift. Scene files sitting in the folder but absent from the index — in the folder, not in the book.</dd></div>
-      <div><dt>Script-agnostic linking</dt> <dd>Links each character's first mention to their note. Which scripts, and what inflected tail they carry, is declared per book — a Gujarati-only book and an English-only book configure differently without either touching the code.</dd></div>
+      <div><dt>Structure, charted</dt> <dd>Charts your manuscript's pacing scene by scene and act by act, so you can see it at a glance. Word counts are taken from the text itself.</dd></div>
+      <div><dt>Measured against a shape</dt> <dd>Compare that arc to a named structure: Freytag's Pyramid, or a <em>rasa-cycle</em> template for non-Western story structure. Mark where you meant the climax to be and see where it lands.</dd></div>
+      <div><dt>Continuity checks</dt> <dd>Finds characters who are mentioned but have no note, acts and chapters that drift out of order, and scene files that sit in the folder but are missing from the index.</dd></div>
+      <div><dt>Script-agnostic linking</dt> <dd>Links each character's first mention to their note. Each book lists the scripts it uses and which word endings still count as the same name, so a Gujarati book and an English book are set up differently without changing any code.</dd></div>
     </dl>
   </section>
 
@@ -535,10 +590,10 @@
   <section aria-labelledby="print-head">
     <h2 class="section-head" id="print-head">When you print</h2>
     <dl>
-      <div><dt>Prose, typeset</dt> <dd>Write Markdown; the build sets it. Trim size and bleed, a wider gutter for the binding, chapters opening on a right-hand page, blank versos carrying no folio, old-style figures. The defaults ship with Typst, so it renders with no fonts installed.</dd></div>
-      <div><dt>Illustrated layout</dt> <dd>A picture book places its own art and type per scene, in a Typst block that stays readable in Obsidian. Bleed is applied on the way out, flipping edge by edge as the leaves demand.</dd></div>
-      <div><dt>Kindle from the same source</dt> <dd>The ebook interior is built from the scenes that made the print file — no second manuscript to keep in step.</dd></div>
-      <div><dt>It asks first</dt> <dd>Setup asks what kind of book this is before it writes anything, because a novel and a picture book want opposite page setups. Getting it wrong yields a valid PDF of the wrong shape.</dd></div>
+      <div><dt>Prose, typeset</dt> <dd>You write Markdown and the build typesets it: trim size and bleed, a wider gutter for the binding, chapters opening on a right-hand page, blank versos without a folio, and old-style figures. The default fonts come with Typst, so you don't need to install any.</dd></div>
+      <div><dt>Illustrated layout</dt> <dd>A picture book places its own art and type per scene, in a Typst block that stays readable in Obsidian. Bleed is added when the PDF is built, on whichever edges each page needs.</dd></div>
+      <div><dt>Kindle from the same source</dt> <dd>The ebook interior is built from the same scene files as the print PDF, so there is only one manuscript to keep up to date.</dd></div>
+      <div><dt>It asks first</dt> <dd>Setup asks what kind of book you're making before it creates any files, because a novel and a picture book need very different page setups. A wrong answer still gives you a valid PDF, but of the wrong kind of book.</dd></div>
     </dl>
   </section>
 
@@ -546,25 +601,23 @@
   <section aria-labelledby="skills-head">
     <h2 class="section-head" id="skills-head">In Claude Code</h2>
     <dl>
-      <div><dt>/book-new</dt> <dd>Scaffolds a book vault — asks for title, format, manuscript status and target channels, then writes the structure.</dd></div>
+      <div><dt>/book-new</dt> <dd>Sets up a new book vault. It asks for the title, format, manuscript status and where you'll publish, then creates the folders and files.</dd></div>
       <div><dt>/book-audit-vault</dt> <dd>Checks the vault is sound: <code>book.yml</code> valid, <code>Story/Index.md</code> and <code>Characters/</code> present, and refreshes the structure chart.</dd></div>
-      <div><dt>/book-audit-manuscript</dt> <dd>Checks the manuscript itself — characters referenced but missing a note, act and chapter drift, first mentions that should be linked.</dd></div>
-      <div><dt>/book-build</dt> <dd>Renders the print PDF and preps the Kindle interior from the same source.</dd></div>
+      <div><dt>/book-audit-manuscript</dt> <dd>Checks the manuscript for characters without a note, acts and chapters out of order, and first mentions that should be linked.</dd></div>
+      <div><dt>/book-build</dt> <dd>Builds the print PDF and prepares the Kindle interior from the same files.</dd></div>
     </dl>
   </section>
 
   <!-- ═══ Or without it ═════════════════════════════════════ -->
   <section aria-labelledby="cli-head">
     <h2 class="section-head" id="cli-head">Or without Claude Code</h2>
-    <p>Every one of those is a command. The plugin is a convenience, not the product.</p>
+    <p>Everything above also runs as a plain command, so you can use the kit without Claude Code.</p>
     <pre><code>python3 authoring/cli.py init       # interview, then scaffold
 python3 authoring/cli.py skeleton   # structure + pacing chart
 python3 authoring/cli.py link       # first mentions -&gt; character notes
 python3 authoring/cli.py check      # continuity and unlisted scenes
 python3 pipeline/build.py           # -&gt; Deliver/&lt;title&gt;.pdf</code></pre>
-    <p>Two runnable example vaults ship with it — a nested novel and a flat
-    picture book, both public-domain text, under 14&nbsp;KB together. The kit
-    self-tests in 47 checks.</p>
+    <p>It comes with two example vaults you can build straight away: a novel with nested folders and a picture book with a flat one. Both use public-domain text and together take up under 14&nbsp;KB. The kit tests itself with 47 checks.</p>
   </section>
 
   <div class="pair">
@@ -574,25 +627,25 @@ python3 pipeline/build.py           # -&gt; Deliver/&lt;title&gt;.pdf</code></pr
     <pre><code>/plugin marketplace add maulikmehta/obsidian-book-pipeline
 /plugin install obsidian-book-pipeline@authorkit</code></pre>
     <p>Free, MIT licensed. Source on <a href="https://github.com/maulikmehta/obsidian-book-pipeline">GitHub</a>.</p>
-    <p class="disclaimer">This tool is actively being developed. Results may occasionally be unexpected &mdash; always verify your output before submitting to a distributor.</p>
+    <p class="disclaimer">The tool is still being developed, so check your output before you send it to a distributor.</p>
   </section>
 
   <!-- ═══ Requirements ══════════════════════════════════════ -->
   <section aria-labelledby="req-head">
     <h2 class="section-head" id="req-head">Requirements</h2>
     <ul>
-      <li><a href="https://quarto.org">Quarto</a> &mdash; renders <code>.qmd</code> to Typst to PDF</li>
+      <li><a href="https://quarto.org">Quarto</a>, which turns <code>.qmd</code> files into Typst and then PDF</li>
       <li>Python&nbsp;3</li>
       <li>ImageMagick, for cover cropping</li>
-      <li>A typeface, if you want one &mdash; type is your book&rsquo;s design, not the pipeline&rsquo;s</li>
+      <li>A typeface of your choice, if you don&rsquo;t want the default</li>
     </ul>
   </section>
   </div>
 
   <div class="proof">
     AuthorKit&trade; is an initiative by <a href="https://swatisjournal.com">Swati Joshi</a>.
-    She publishes <b>6</b>&nbsp;titles across <b>13</b>&nbsp;live editions — Amazon.com, Amazon.in,
-    IngramSpark and Barnes&nbsp;&amp;&nbsp;Noble — using this pipeline.
+    She publishes <b>6</b>&nbsp;titles in <b>13</b>&nbsp;live editions on Amazon.com, Amazon.in,
+    IngramSpark and Barnes&nbsp;&amp;&nbsp;Noble, all built with this pipeline.
   </div>
 
   <!-- ═══ A question, not an offer ══════════════════════════ -->
@@ -600,8 +653,8 @@ python3 pipeline/build.py           # -&gt; Deliver/&lt;title&gt;.pdf</code></pr
     <p class="services__label">Thinking out loud</p>
     <h2 class="services__headline" id="ask-head">What are you fighting with?</h2>
     <p class="services__body">
-      Five picture books and a novella in, production got easier — but only for
-      those two shapes. Spreads and bleed for one, chapter breaks and binding
+      Five picture books and a novella in, production has got easier, but only for
+      those two kinds of book: spreads and bleed for one, chapter breaks and binding
       margins for the other. What I don't know is what everyone else is stuck
       on: activity books, poetry where the line breaks have to survive,
       cookbooks, non-Latin scripts, a trim size nobody stocks.
