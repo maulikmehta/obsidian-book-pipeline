@@ -531,13 +531,13 @@
 
   /* ── Preflight page ───────────────────────────────────────── */
   .pf h2 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; letter-spacing: -.015em; color: var(--black); margin: 2.4rem 0 .7rem; }
-  .pf p, .pf li { color: var(--stone); max-width: 42rem; margin-bottom: 1rem; }
+  .pf p, .pf li { color: var(--stone); margin-bottom: 1rem; }
   .pf ul { padding-left: 1.2rem; margin: 0 0 1rem; }
   .pf a { color: var(--black); }
   .pf a.pf__cta { display: inline-block; font-family: var(--font-body); font-weight: 600; text-decoration: none; background: var(--black); color: var(--paper); padding: .8rem 1.4rem; border-radius: 4px; margin: .4rem 0 .6rem; }
   .pf a.pf__cta:hover { opacity: .88; }
   .pf__note { font-size: .95rem; margin-bottom: 0; }
-  .pf figure { margin: 1.6rem 0 .5rem; max-width: 52rem; }
+  .pf figure { margin: 1.6rem 0 1.5rem; width: 100%; max-width: 100%; }
   .pf figure img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
   .pf figcaption { font-size: .9rem; color: var(--stone); margin-top: .5rem; }
 </style>
@@ -556,13 +556,20 @@
     <nav class="masthead__nav" aria-label="Site navigation">
       <a href="/skills/">Skills</a>
       <a href="https://resources.authorkit.pro/">Resources</a>
+      <a class="masthead__gh" href="https://github.com/maulikmehta/obsidian-book-pipeline"
+         target="_blank" rel="noopener" aria-label="View the source on GitHub">
+        <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"
+             aria-hidden="true" focusable="false">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+      </a>
     </nav>
 
   </div>
 </header>
 
 <main>
-<div class="wrap wrap--home pf">
+<div class="wrap wrap--page pf">
   <section class="hero">
     <p class="hero__eyebrow">Print file check for self-publishing authors</p>
     <h1 class="hero__headline">Find the problem<br><em>before the printer does.</em></h1>
@@ -576,25 +583,39 @@
     <figcaption>A report for a sample file with one unembedded font. The sample files ship with the skill.</figcaption>
   </figure>
 
-  <h2>What it checks</h2>
-  <p>Sixteen checks, seventeen on IngramSpark. They cover trim and page size, page count, fonts, image resolution, safe margins, spine width, cover size, PDF version, encryption, transparency, blank pages, printer marks, bleed and file size. Each result shows the measured value, the printer's limit and a fix. Every limit cites a printer source and the date it was checked.</p>
+  <div class="pair">
+    <section>
+      <h2>What it checks</h2>
+      <p>Sixteen checks, seventeen on IngramSpark. They cover trim and page size, page count, fonts, image resolution, safe margins, spine width, cover size, PDF version, encryption, transparency, blank pages, printer marks, bleed and file size. Each result shows the measured value, the printer's limit and a fix. Every limit cites a printer source and the date it was checked.</p>
+    </section>
 
-  <h2>What it is honest about</h2>
-  <p>When it cannot verify something it reports unknown, never pass. The IngramSpark spine width is an estimate unless you give it the value from Ingram's cover template. Some limits come from files the printers accepted, not from printer documentation. It was tested on accepted files from two published titles, 6 &times; 9 and 5.5 &times; 8.5 inches. A passing report does not guarantee that a printer will accept your file.</p>
+    <section>
+      <h2>What it is honest about</h2>
+      <p>When it cannot verify something it reports unknown, never pass. The IngramSpark spine width is an estimate unless you give it the value from Ingram's cover template. Some limits come from files the printers accepted, not from printer documentation. It was tested on accepted files from two published titles, 6 &times; 9 and 5.5 &times; 8.5 inches. A passing report does not guarantee that a printer will accept your file.</p>
+    </section>
+  </div>
 
-  <h2>How you use it</h2>
-  <p>Preflight is an agent skill. You give your agent the PDF path, the printer, the trim size and the paper type. It runs one Python script on your computer and writes a Markdown report. It needs Python 3.9 or later and the pypdf package. Poppler is optional and adds the font, image and margin checks. The script makes no network calls.</p>
+  <div class="pair">
+    <section>
+      <h2>How you use it</h2>
+      <p>Preflight is an agent skill. You give your agent the PDF path, the printer, the trim size and the paper type. It runs one Python script on your computer and writes a Markdown report. It needs Python 3.9 or later and the pypdf package. Poppler is optional and adds the font, image and margin checks. The script makes no network calls.</p>
+    </section>
 
-  <h2>Free tools alongside it</h2>
-  <p>The steps around the file check have free tools on <a href="https://resources.authorkit.pro/">resources.authorkit.pro</a>:</p>
-  <ul>
-    <li><a href="https://resources.authorkit.pro/cover-calculator/">KDP cover calculator</a> for spine, full cover and gutter</li>
-    <li><a href="https://resources.authorkit.pro/kdp-preflight-checklist/">KDP paperback preflight checklist</a></li>
-    <li><a href="https://resources.authorkit.pro/kdp-royalty-calculator/">KDP royalty calculator</a></li>
-  </ul>
+    <section>
+      <h2>Free tools alongside it</h2>
+      <p>The steps around the file check have free tools on <a href="https://resources.authorkit.pro/">resources.authorkit.pro</a>:</p>
+      <ul>
+        <li><a href="https://resources.authorkit.pro/cover-calculator/">KDP cover calculator</a> for spine, full cover and gutter</li>
+        <li><a href="https://resources.authorkit.pro/kdp-preflight-checklist/">KDP paperback preflight checklist</a></li>
+        <li><a href="https://resources.authorkit.pro/kdp-royalty-calculator/">KDP royalty calculator</a></li>
+      </ul>
+    </section>
+  </div>
 
-  <h2>If you write in Obsidian</h2>
-  <p>The <a href="/">AuthorKit pipeline</a> builds the print-ready PDF from your vault and stays free and open source. Preflight is a separate skill that checks the file the pipeline, or any other tool, produces. It is sold through Agensi under a personal purchase licence.</p>
+  <section class="services" style="margin-top: 2rem;">
+    <h2 style="margin-top: 0;">If you write in Obsidian</h2>
+    <p>The <a href="/">AuthorKit pipeline</a> builds the print-ready PDF from your vault and stays free and open source. Preflight is a separate skill that checks the file the pipeline, or any other tool, produces. It is sold through Agensi under a personal purchase licence.</p>
+  </section>
 </div>
 </main>
 
