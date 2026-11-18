@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AuthorKit: Obsidian to Print-Ready Book PDF (Free, Open Source)</title>
-<meta name="description" content="AuthorKit is a free, open-source pipeline that turns an Obsidian vault into a print-ready book PDF and a Kindle interior, using Quarto and Typst. Used for 6 published titles on Amazon, IngramSpark and Barnes &amp; Noble.">
+<title>Free Obsidian to KDP and IngramSpark Print-Ready PDF (Open Source) — AuthorKit</title>
+<meta name="description" content="A free, open-source pipeline that turns an Obsidian vault into a print-ready book PDF for Amazon KDP and IngramSpark, with Kindle interior support.">
 <link rel="canonical" href="https://authorkit.pro/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AuthorKit">
-<meta property="og:title" content="AuthorKit: Obsidian to Print-Ready Book PDF">
-<meta property="og:description" content="AuthorKit is a free, open-source pipeline that turns an Obsidian vault into a print-ready book PDF and a Kindle interior, using Quarto and Typst. Used for 6 published titles on Amazon, IngramSpark and Barnes &amp; Noble.">
+<meta property="og:title" content="AuthorKit: Free Obsidian to KDP and IngramSpark Print-Ready PDF">
+<meta property="og:description" content="A free, open-source pipeline that turns an Obsidian vault into a print-ready book PDF for Amazon KDP and IngramSpark, with Kindle interior support.">
 <meta property="og:url" content="https://authorkit.pro/">
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">
@@ -41,7 +41,7 @@
       "@id": "https://authorkit.pro/#app",
       "name": "AuthorKit",
       "alternateName": "Obsidian Book Pipeline",
-      "description": "AuthorKit is a free, open-source pipeline that turns an Obsidian vault into a print-ready book PDF and a Kindle interior, using Quarto and Typst. Used for 6 published titles on Amazon, IngramSpark and Barnes & Noble.",
+      "description": "A free, open-source pipeline that turns an Obsidian vault into a print-ready book PDF for Amazon KDP and IngramSpark, with Kindle interior support.",
       "url": "https://authorkit.pro/",
       "applicationCategory": "DesignApplication",
       "isAccessibleForFree": true,
@@ -593,17 +593,14 @@
   <!-- ═══ Hero ══════════════════════════════════════════════ -->
   <section class="hero">
     <p class="hero__eyebrow">Publishing Pipeline · Free &amp; Open Source</p>
-    <h1 class="hero__headline">Your Obsidian vault,<br><em>print-ready.</em></h1>
+    <h1 class="hero__headline">Turn your Obsidian vault into a free,<br><em>print-ready PDF for KDP and IngramSpark.</em></h1>
     <p class="hero__lede">
-      AuthorKit is a free, open-source pipeline that turns an Obsidian vault into a
-      print-ready book PDF. It typesets your Markdown through Quarto and Typst, with
-      chapters opening on a recto, binding margins and blank versos without folios.
-      It also reads your manuscript while you draft and points out structural
-      problems before they reach a proof.
+      AuthorKit is a free, open-source pipeline for self-publishing authors.
+      It turns your Obsidian manuscript into an interior PDF formatted for Amazon KDP and IngramSpark.
+      It also reads your draft to catch pacing and continuity problems before you export.
     </p>
     <p class="hero__lede">
-      Each title needs one small <code>book.yml</code> file instead of its own build
-      script. Novels, picture books and workbooks all come from the same tool.
+      Each book uses one configuration file. Novels, picture books and workbooks all build from the same tool.
     </p>
   </section>
 
@@ -611,10 +608,10 @@
   <section aria-labelledby="write-head">
     <h2 class="section-head" id="write-head">While you write</h2>
     <dl>
-      <div><dt>Structure, charted</dt> <dd>Charts your manuscript's pacing scene by scene and act by act, so you can see it at a glance. Word counts are taken from the text itself.</dd></div>
-      <div><dt>Measured against a shape</dt> <dd>Compare that arc to a named structure: Freytag's Pyramid, or a <em>rasa-cycle</em> template for non-Western story structure. Mark where you meant the climax to be and see where it lands.</dd></div>
-      <div><dt>Continuity checks</dt> <dd>Finds characters who are mentioned but have no note, acts and chapters that drift out of order, and scene files that sit in the folder but are missing from the index.</dd></div>
-      <div><dt>Script-agnostic linking</dt> <dd>Links each character's first mention to their note. Each book lists the scripts it uses and which word endings still count as the same name, so a Gujarati book and an English book are set up differently without changing any code.</dd></div>
+      <div><dt>Structure, charted</dt> <dd>Charts your manuscript pacing scene by scene and act by act. Word counts come directly from the text files.</dd></div>
+      <div><dt>Measured against a shape</dt> <dd>Compare that arc to a named structure: Freytag's Pyramid, or a rasa-cycle template for non-Western story structure. Mark where you planned the climax and see where it lands.</dd></div>
+      <div><dt>Continuity checks</dt> <dd>Finds characters mentioned without a dedicated note. Flags acts and chapters that drift out of order, and scene files missing from the index.</dd></div>
+      <div><dt>Script-agnostic linking</dt> <dd>Links each character first mention to their note. Each book lists the scripts it uses and which word endings match, so Gujarati and English books configure easily without code changes.</dd></div>
     </dl>
   </section>
 
@@ -622,10 +619,10 @@
   <section aria-labelledby="print-head">
     <h2 class="section-head" id="print-head">When you print</h2>
     <dl>
-      <div><dt>Prose, typeset</dt> <dd>You write Markdown and the build typesets it: trim size and bleed, a wider gutter for the binding, chapters opening on a right-hand page, blank versos without a folio, and old-style figures. The default fonts come with Typst, so you don't need to install any.</dd></div>
-      <div><dt>Illustrated layout</dt> <dd>A picture book places its own art and type per scene, in a Typst block that stays readable in Obsidian. Bleed is added when the PDF is built, on whichever edges each page needs.</dd></div>
-      <div><dt>Kindle from the same source</dt> <dd>The ebook interior is built from the same scene files as the print PDF, so there is only one manuscript to keep up to date.</dd></div>
-      <div><dt>It asks first</dt> <dd>Setup asks what kind of book you're making before it creates any files, because a novel and a picture book need very different page setups. A wrong answer still gives you a valid PDF, but of the wrong kind of book.</dd></div>
+      <div><dt>Prose, typeset</dt> <dd>AuthorKit typesets your Markdown using Quarto and Typst. Chapters open on a right-hand page (recto). Blank left-hand pages (versos) omit folios. The gutter margin widens for physical binding. Default fonts come included with Typst.</dd></div>
+      <div><dt>Illustrated layout</dt> <dd>A picture book places its own art and type per scene in a Typst block that stays readable in Obsidian. Bleed is added automatically when the PDF builds.</dd></div>
+      <div><dt>Kindle from the same source</dt> <dd>The ebook interior is built from the same scene files as the print PDF, so there is only one manuscript to maintain.</dd></div>
+      <div><dt>Setup by book format</dt> <dd>Setup asks what kind of book you are creating before generating files. Novels, picture books and workbooks require different page geometry.</dd></div>
     </dl>
   </section>
 
@@ -650,6 +647,16 @@ python3 authoring/cli.py link       # first mentions -&gt; character notes
 python3 authoring/cli.py check      # continuity and unlisted scenes
 python3 pipeline/build.py           # -&gt; Deliver/&lt;title&gt;.pdf</code></pre>
     <p>It comes with two example vaults you can build straight away: a novel with nested folders and a picture book with a flat one. Both use public-domain text and together take up under 14&nbsp;KB. The kit tests itself with 47 checks.</p>
+  </section>
+
+  <!-- ═══ Free publishing tools ═════════════════════════════ -->
+  <section aria-labelledby="tools-head">
+    <h2 class="section-head" id="tools-head">Free publishing tools</h2>
+    <p>AuthorKit provides free standalone web tools for self-publishing authors on <a href="https://resources.authorkit.pro/">AuthorKit Resources</a>.</p>
+    <p>Calculate cover wrap dimensions, spine width and Canva pixel sizes with the <a href="https://resources.authorkit.pro/cover-calculator/">KDP cover calculator</a>.</p>
+    <p>Check printing costs and estimated net earnings across markets with the <a href="https://resources.authorkit.pro/kdp-royalty-calculator/">KDP royalty calculator</a>.</p>
+    <p>Generate compliant copyright notices and disclaimer statements with the <a href="https://resources.authorkit.pro/copyright-page-generator/">copyright page generator</a>.</p>
+    <p>Follow official registration steps on the portal with the <a href="https://resources.authorkit.pro/isbn-india/">free ISBN application guide for India</a>.</p>
   </section>
 
   <div class="pair">

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AuthorKit Preflight: Check Your Book PDF Before KDP or IngramSpark</title>
-<meta name="description" content="AuthorKit Preflight checks a finished book interior and cover PDF against Amazon KDP and IngramSpark paperback rules and reports what to fix before you upload. $9, one-time, on Agensi.">
+<title>AuthorKit Preflight: Fix KDP and IngramSpark PDF Rejection Errors</title>
+<meta name="description" content="AuthorKit Preflight checks paperback interior and cover PDFs for KDP and IngramSpark errors before upload: unembedded fonts, spine width and margin issues. $9 on Agensi.">
 <link rel="canonical" href="https://authorkit.pro/skills/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AuthorKit">
-<meta property="og:title" content="AuthorKit Preflight: Check Your Book PDF Before KDP or IngramSpark">
-<meta property="og:description" content="Checks a finished book interior and cover PDF against Amazon KDP and IngramSpark paperback rules and reports what to fix before you upload.">
+<meta property="og:title" content="AuthorKit Preflight: Fix KDP and IngramSpark PDF Rejection Errors">
+<meta property="og:description" content="Checks paperback interior and cover PDFs for KDP and IngramSpark errors before upload: unembedded fonts, spine width and margin issues. $9 on Agensi.">
 <meta property="og:url" content="https://authorkit.pro/skills/">
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">
@@ -571,11 +571,26 @@
 <main>
 <div class="wrap wrap--page pf">
   <section class="hero">
-    <p class="hero__eyebrow">Print file check for self-publishing authors</p>
-    <h1 class="hero__headline">Find the problem<br><em>before the printer does.</em></h1>
-    <p class="hero__lede">AuthorKit Preflight checks a finished book interior and cover PDF against Amazon KDP and IngramSpark paperback rules. It tells you what passed, what needs a fix and what it could not verify.</p>
+    <p class="hero__eyebrow">Local PDF verification for AI coding agents</p>
+    <h1 class="hero__headline">KDP rejected my PDF.<br><em>Find the problem before you upload again.</em></h1>
+    <p class="hero__lede">You export a finished interior or cover PDF and upload it to Amazon KDP or IngramSpark. An automated check rejects the file with an ambiguous error message.</p>
+    <p class="hero__lede">AuthorKit Preflight inspects your PDF locally before submission. It reports pass, warning or failure for geometry, spine width, font embedding and margins, paired with the exact technical fix.</p>
     <a class="pf__cta" href="https://www.agensi.io/skills/authorkit-preflight" rel="noopener">Get it on Agensi, $9</a>
     <p class="pf__note">One-time purchase. Agensi handles payment and the money-back guarantee.</p>
+  </section>
+
+  <section>
+    <h2>Who this skill is for</h2>
+    <p>AuthorKit Preflight is an agent skill for authors working with an AI coding agent such as Claude Code. It requires Python 3.9 or later, the pypdf library, and an active AI agent. Installing Poppler adds deep font, image and margin checks. It runs directly in your local terminal session. It is not a generic web converter or push-button service for non-technical authors. Authors without a local AI coding setup should use our free web checklist instead.</p>
+  </section>
+
+  <section>
+    <h2>Common upload errors caught before submission</h2>
+    <p>Amazon KDP and IngramSpark enforce strict mechanical rules on PDF files. Small export mistakes stop your book during automated file intake.</p>
+    <p><strong>Unembedded fonts.</strong> PDF readers display local system fonts on your screen even when the typeface is not embedded in the file. Print machinery requires embedded fonts to rasterize glyphs accurately on physical paper.</p>
+    <p><strong>Spine width mismatch.</strong> Paperback spine thickness depends on page count and paper thickness. An incorrect spine measurement shifts your cover artwork and causes cover rejection.</p>
+    <p><strong>Margin and safe area errors.</strong> KDP requires minimum margins based on total page count. Page numbers or body text placed inside the live element margin boundary get flagged immediately.</p>
+    <p><strong>Image resolution drops.</strong> Raster artwork below 300 DPI prints blurry and triggers automated quality warnings.</p>
   </section>
 
   <figure>
@@ -583,38 +598,56 @@
     <figcaption>A report for a sample file with one unembedded font. The sample files ship with the skill.</figcaption>
   </figure>
 
-  <div class="pair">
-    <section>
-      <h2>What it checks</h2>
-      <p>Sixteen checks, seventeen on IngramSpark. They cover trim and page size, page count, fonts, image resolution, safe margins, spine width, cover size, PDF version, encryption, transparency, blank pages, printer marks, bleed and file size. Each result shows the measured value, the printer's limit and a fix. Every limit cites a printer source and the date it was checked.</p>
-    </section>
+  <section>
+    <h2>Plain-text sample report</h2>
+    <p>The skill runs on your computer and writes a Markdown report. Here is the actual output from the failing test interior included with the skill:</p>
+    <pre><code># AuthorKit Preflight Report
 
-    <section>
-      <h2>What it is honest about</h2>
-      <p>When it cannot verify something it reports unknown, never pass. The IngramSpark spine width is an estimate unless you give it the value from Ingram's cover template. Some limits come from files the printers accepted, not from printer documentation. It was tested on accepted files from two published titles, 6 &times; 9 and 5.5 &times; 8.5 inches. A passing report does not guarantee that a printer will accept your file.</p>
-    </section>
-  </div>
+**Summary:** 15 passed, 0 warnings, 1 failed, 0 unknown. Result: FAIL
 
-  <div class="pair">
-    <section>
-      <h2>How you use it</h2>
-      <p>Preflight is an agent skill. You give your agent the PDF path, the printer, the trim size and the paper type. It runs one Python script on your computer and writes a Markdown report. It needs Python 3.9 or later and the pypdf package. Poppler is optional and adds the font, image and margin checks. The script makes no network calls.</p>
-    </section>
+| Check | Status | Measured | Limit | Fix |
+| :--- | :--- | :--- | :--- | :--- |
+| Trim Size | pass | 6.000x9.000 in | standard trim size | None |
+| Interior Page Size | pass | 6.000 x 9.000 in | 6.000 x 9.000 in | None |
+| Page Count | pass | 24 pages | 24 to 828 pages | None |
+| Font Embedding | fail | unembedded: Helvetica | all fonts embedded | Embed all fonts in the native layout application before PDF export |
+| Image Resolution | pass | 300 DPI | &gt;= 300 DPI | None |
+| Safe Margins | pass | inside: 0.750 in, outside: 0.500 in | inside &gt;= 0.375 in, outside &gt;= 0.250 in | None |
+| Spine Width | pass | 0.054 in (calculated) | 0.054 in | None |
+| Cover Dimensions | pass | 12.304 x 9.250 in | 12.304 x 9.250 in | None |
+| PDF Version | pass | PDF 1.7 (PDF/X detected) | PDF/X-1a preferred | None |
+| Encryption | pass | unencrypted | unencrypted | None |
+| Transparency | pass | flattened | flattened | None |
+| Blank Pages | pass | no excessive blank pages | body &lt;= 4, end &lt;= 10 | None |
+| Page Layout | pass | single pages | single page layout | None |
+| Printer Marks | pass | no printer marks | no printer marks | None |
+| Bleed Usage | pass | bleed usage matches settings | consistent bleed usage | None |
+| File Size | pass | 0.0 MB | &lt;= 650 MB | None |</code></pre>
+  </section>
 
-    <section>
-      <h2>Free tools alongside it</h2>
-      <p>The steps around the file check have free tools on <a href="https://resources.authorkit.pro/">resources.authorkit.pro</a>:</p>
-      <ul>
-        <li><a href="https://resources.authorkit.pro/cover-calculator/">KDP cover calculator</a> for spine, full cover and gutter</li>
-        <li><a href="https://resources.authorkit.pro/kdp-preflight-checklist/">KDP paperback preflight checklist</a></li>
-        <li><a href="https://resources.authorkit.pro/kdp-royalty-calculator/">KDP royalty calculator</a></li>
-      </ul>
-    </section>
-  </div>
+  <section>
+    <h2>What it is honest about</h2>
+    <p>When the tool cannot verify a detail, it reports unknown. It never reports a speculative pass. The IngramSpark spine width calculation is an estimate unless you provide the exact number from IngramSpark's template generator. Some limits come from files print facilities accepted in practice rather than published documentation. The checks were developed against accepted files from two published book editions. A passing report does not guarantee that a printer will accept your file.</p>
+  </section>
+
+  <section>
+    <h2>How you use it</h2>
+    <p>Preflight runs as a skill in your AI agent conversation. You supply the local path to your exported PDF, the printer name, trim dimensions and paper stock. The script inspects the file on your machine and outputs the table above. It makes no remote network calls. Your manuscript never leaves your hard drive.</p>
+  </section>
+
+  <section>
+    <h2>Free companion tools</h2>
+    <p>AuthorKit provides free standalone web tools for self-publishing authors on <a href="https://resources.authorkit.pro/">AuthorKit Resources</a>.</p>
+    <p>Calculate cover wrap dimensions, spine width and Canva pixel sizes with the <a href="https://resources.authorkit.pro/cover-calculator/">KDP cover calculator</a>.</p>
+    <p>Walk through physical submission specifications using the <a href="https://resources.authorkit.pro/kdp-preflight-checklist/">KDP paperback preflight checklist</a>.</p>
+    <p>Check printing costs and estimated net earnings across markets with the <a href="https://resources.authorkit.pro/kdp-royalty-calculator/">KDP royalty calculator</a>.</p>
+    <p>Generate compliant copyright notices and disclaimer statements with the <a href="https://resources.authorkit.pro/copyright-page-generator/">copyright page generator</a>.</p>
+    <p>Read registration steps for Indian editions in the <a href="https://resources.authorkit.pro/isbn-india/">free ISBN application guide for India</a>.</p>
+  </section>
 
   <section class="services" style="margin-top: 2rem;">
     <h2 style="margin-top: 0;">If you write in Obsidian</h2>
-    <p>The <a href="/">AuthorKit pipeline</a> builds the print-ready PDF from your vault and stays free and open source. Preflight is a separate skill that checks the file the pipeline, or any other tool, produces. It is sold through Agensi under a personal purchase licence.</p>
+    <p>The <a href="/">AuthorKit pipeline</a> builds the print-ready PDF from your vault and stays free and open source under the MIT licence. Preflight is a separate skill that checks the file the pipeline or any other tool produces. It is sold through Agensi under a personal purchase licence.</p>
   </section>
 </div>
 </main>
