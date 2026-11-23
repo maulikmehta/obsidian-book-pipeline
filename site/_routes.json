@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": ["/fonts/*", "/*.txt", "/*.xml", "/*.png", "/*.webp"]
+}
