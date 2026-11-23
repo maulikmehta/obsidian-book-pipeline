@@ -1,0 +1,9 @@
+name = "obsidian-book-pipeline"
+pages_build_output_dir = "site"
+compatibility_date = "2026-09-29"
+
+# Arrivals from tagged links (functions/_middleware.js), shared with resources.authorkit.pro.
+[[d1_databases]]
+binding = "DB"
+database_name = "authorkit_arrivals"
+database_id = "4568d322-65e7-432b-8691-1d3d421caaa7"
