@@ -459,7 +459,8 @@
   /* ── Responsive ──────────────────────────────────────────── */
   @media (max-width: 600px) {
     .masthead__nav { gap: 1rem; font-size: .85rem; white-space: nowrap; }
-    .masthead__nav .masthead__gh { display: none; }
+    .masthead__nav .masthead__gh,
+    .masthead__nav .masthead__yt { display: none; }
     .colophon__inner { flex-direction: column; align-items: flex-start; }
     .colophon__legal { white-space: normal; }
   }
@@ -575,6 +576,13 @@
     <nav class="masthead__nav" aria-label="Site navigation">
       <a href="/skills/">Skills</a>
       <a href="https://resources.authorkit.pro/">Resources</a>
+      <a class="masthead__yt" href="https://www.youtube.com/@authorkitpro"
+         target="_blank" rel="noopener" aria-label="Watch AuthorKit on YouTube">
+        <svg viewBox="0 0 24 24" width="21" height="21" fill="currentColor"
+             aria-hidden="true" focusable="false">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      </a>
       <a class="masthead__gh" href="https://github.com/maulikmehta/obsidian-book-pipeline"
          target="_blank" rel="noopener" aria-label="View the source on GitHub">
         <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"
